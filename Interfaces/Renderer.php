@@ -6,5 +6,5 @@ interface Renderer
 {
   public function getDataType( );
   public function getTemplateType( );
-  public function render( );
+  public function render( $data, $template );
 }

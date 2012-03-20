@@ -7,8 +7,9 @@ use \Apex\View\Data as ApexData;
 
 trait Data
 {
-  public function getData( $viewName )
+  public function getData( $viewName, $type )
   {
+    var_dump($type);
     $dataName = $viewName . 'Data';
 
     if ( Container::available( $dataName ) )
@@ -16,6 +17,6 @@ trait Data
       return Container::get( $dataName );
     }
 
-    return Container::set( $dataName, new ApexData( $dataName ) );
+    return Container::set( $dataName, ApexData::build( $type, $viewName ) );
   }
 }

@@ -2,6 +2,9 @@
 
 namespace Apex;
 
+/**
+ * Controller
+ */
 abstract class Controller
 {
   use
@@ -18,13 +21,21 @@ abstract class Controller
   {
     $this->request = $this->getRequest( ); 
     $this->response = $this->getResponse( );
-    $this->view = $this->getView( );
+    $this->view = $this->getView( get_class( $this ) );
   }
 
-  protected function output( $name = '' )
+  public function setView( $view )
   {
-    $view = $this->getView( $name ); 
+    $this->view = $view;
+  }
 
-    $view->output( );
+  protected function attach( $name, $value )
+  {
+    return $this->view->attach( $name, $value );
+  }
+
+  protected function output( )
+  {
+    $this->view->output( );
   }
 }

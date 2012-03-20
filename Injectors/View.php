@@ -7,10 +7,8 @@ use \Apex\View as ApexView;
 
 trait View
 {
-  public function getView( $name = '' )
+  public function getView( $viewName = 'View' )
   {
-    $viewName = 'View' . $name;
-
     if ( Container::available( $viewName ) )
     {
       return Container::get( $viewName );

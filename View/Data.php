@@ -2,13 +2,16 @@
 
 namespace Apex\View;
 
-class Data extends \ArrayObject
+class Data
 {
-  protected $dataName;
-
-  public function __construct( $name )
+  public static function build ( $type, $name )
   {
-    parent::__construct( );
-    $this->dataName = $name;  
-  }  
+    $className = "\\Apex\\View\\Data\\$type";
+    if ( class_exists( $className ) )
+    {
+      return new $className( $name );
+    }
+
+    throw new InvalidArgumentExcpetion( "$type doesn't exist in Apex\\View\\Data" );
+  }
 }

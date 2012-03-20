@@ -16,8 +16,10 @@ class XSLT implements Renderer
     return 'XSLT';
   }
 
-  public function render( )
+  public function render( $data, $template )
   {
-
+    echo htmlspecialchars( $data->saveXML( ) );
+    echo __METHOD__; 
+    echo "<br>";
   }
 }

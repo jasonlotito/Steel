@@ -10,7 +10,7 @@ class View
     Injectors\Config,
     Injectors\Renderer;
 
-  const DEFAULT_NAME = 'View';
+  const DEFAULT_NAME = 'View\\';
 
   protected $view;
 
@@ -22,26 +22,17 @@ class View
 
   protected $config;
 
-  protected function __construct( $name, $view )
+  protected function __construct( $name )
   {
     $this->config = $this->getConfig( );
-    $this->view = $view;
-    $this->name = $name;
+    $this->name = stripslashes( $name );
     $this->renderer = $this->getRenderer( $this->config->get( )->renderer );
     $this->data = $this->getData( $this->name, $this->renderer->getDataType( ) );
   }  
 
-  public static function create( $view, $name = '' )
+  public static function create( $name )
   {
-    // If no name is passed, we still end up with just the Default
-    $viewName = self::DEFAULT_NAME . $name;
-
-    if ( Container::available( $viewName ) )
-    {
-      return Container::get( $viewName );
-    }
-
-    return Container::set( $viewName, new self( $viewName, $view ) );
+    return new self( $name );
   }
 
   public function setRenderer( Interfaces\Renderer $renderer )
@@ -56,7 +47,7 @@ class View
 
   public function attach( $name, $value )
   {
-    $this->data[ $name ] = $value;
+    $this->data->setData( $name, $value );
   }
 
   public function output( )
