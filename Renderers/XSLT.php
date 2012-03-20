@@ -18,8 +18,11 @@ class XSLT implements Renderer
 
   public function render( $data, $template )
   {
-    echo htmlspecialchars( $data->saveXML( ) );
-    echo __METHOD__; 
-    echo "<br>";
+    $xslt = new \XSLTProcessor( );
+    $xslDoc = new \DOMDocument( );
+    $xslDoc->load( '../app/AppTest/XSL/Home.xsl', LIBXML_NOCDATA );
+    $xslt->importStylesheet( $xslDoc );
+
+    echo $xslt->transformToXML( $data );
   }
 }

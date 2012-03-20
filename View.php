@@ -26,6 +26,7 @@ class View
   {
     $this->config = $this->getConfig( );
     $this->name = stripslashes( $name );
+    $this->template = str_replace( '\\', '/', $name);
     $this->renderer = $this->getRenderer( $this->config->get( )->renderer );
     $this->data = $this->getData( $this->name, $this->renderer->getDataType( ) );
   }  
