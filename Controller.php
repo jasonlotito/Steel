@@ -16,12 +16,13 @@ abstract class Controller
   protected $request;
   protected $response;
   protected $view;
+  protected $templateName = 'Default';
 
   public function __construct( )
   {
     $this->request = $this->getRequest( ); 
     $this->response = $this->getResponse( );
-    $this->view = $this->getView( get_class( $this ) );
+    $this->view = $this->getView( $this->templateName );
   }
 
   public function setView( $view )

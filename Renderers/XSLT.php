@@ -6,6 +6,9 @@ use Apex\Interfaces\Renderer;
 
 class XSLT implements Renderer
 {
+  use
+    \Apex\Injectors\Config;
+
   public function getDataType( )
   {
     return 'XML';
@@ -20,9 +23,9 @@ class XSLT implements Renderer
   {
     $xslt = new \XSLTProcessor( );
     $xslDoc = new \DOMDocument( );
-    $xslDoc->load( '../app/AppTest/XSL/Home.xsl', LIBXML_NOCDATA );
+    $xslDoc->load( $this->getConfig( )->get( )->directories->templates . $template . '.xsl' );
     $xslt->importStylesheet( $xslDoc );
-
-    echo $xslt->transformToXML( $data );
+    
+    return $xslt->transformToXML( $data );
   }
 }

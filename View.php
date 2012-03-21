@@ -29,6 +29,7 @@ class View
     $this->template = str_replace( '\\', '/', $name);
     $this->renderer = $this->getRenderer( $this->config->get( )->renderer );
     $this->data = $this->getData( $this->name, $this->renderer->getDataType( ) );
+    $this->baseTemplate = $this->config->get( )->baseTemplate;
   }  
 
   public static function create( $name )
@@ -53,6 +54,10 @@ class View
 
   public function output( )
   {
-    $this->renderer->render( $this->data, $this->template );
+    $data = $this->renderer->render( $this->data, $this->template );
+    $container = $this->getData( 'BaseTemplate', $this->renderer->getDataType( ) );
+    $container->setData( 'content', $data );
+
+    echo $this->renderer->render( $container, $this->baseTemplate );
   }
 }

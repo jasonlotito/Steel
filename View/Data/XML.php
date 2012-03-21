@@ -9,8 +9,6 @@ class XML extends \DOMDocument
   public function __construct( $rootName )
   {
     parent::__construct( '1.0', 'UTF-8' );
-    echo $rootName;
-    echo "<br>";
     $this->root = $this->createElement( $rootName ); 
     $this->appendChild( $this->root );
   }
@@ -36,13 +34,16 @@ class XML extends \DOMDocument
       return;
     }
 
+    $ele = $this->createElement( $name );
+    $ele->appendChild( $this->createCDATASection( $value ) );
+
     if ( isset( $parentNode ) )
     {
-      $parentNode->appendChild( $this->createElement( $name, $value ) );
+      $parentNode->appendChild( $ele );
     }
     else
     {
-      $this->root->appendChild( $this->createElement( $name, $value ) );
+      $this->root->appendChild( $ele );
     }
   }
 

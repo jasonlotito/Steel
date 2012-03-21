@@ -9,7 +9,6 @@ trait Data
 {
   public function getData( $viewName, $type )
   {
-    var_dump($type);
     $dataName = $viewName . 'Data';
 
     if ( Container::available( $dataName ) )
