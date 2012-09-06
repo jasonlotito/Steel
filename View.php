@@ -1,6 +1,6 @@
 <?php
 
-namespace Apex;
+namespace Steel;
 
 class View
 {
@@ -30,7 +30,7 @@ class View
     $this->renderer = $this->getRenderer( $this->config->get( )->renderer );
     $this->data = $this->getData( $this->name, $this->renderer->getDataType( ) );
     $this->baseTemplate = $this->config->get( )->baseTemplate;
-  }  
+  }
 
   public static function create( $name )
   {
@@ -40,11 +40,11 @@ class View
   public function setRenderer( Interfaces\Renderer $renderer )
   {
     $this->renderer = $renderer;
-  } 
+  }
 
   public function setTemplate( $template )
   {
-    $this->template = $this->getTemplate( $this->name ); 
+    $this->template = $this->getTemplate( $this->name );
   }
 
   public function attach( $name, $value )

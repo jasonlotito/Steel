@@ -1,9 +1,9 @@
 <?php
 
-namespace Apex\Injectors;
+namespace Steel\Injectors;
 
-use \Apex\Container;
-use \Apex\View as ApexView;
+use \Steel\Container;
+use \Steel\View as SteelView;
 
 trait View
 {
@@ -14,6 +14,6 @@ trait View
       return Container::get( $viewName );
     }
 
-    return Container::set( $viewName, ApexView::create( $viewName ) );
+    return Container::set( $viewName, SteelView::create( $viewName ) );
   }
 }

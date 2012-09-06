@@ -1,9 +1,9 @@
 <?php
 
-namespace Apex\Injectors\View;
+namespace Steel\Injectors\View;
 
-use \Apex\Container;
-use \Apex\View\Data as ApexData;
+use \Steel\Container;
+use \Steel\View\Data as SteelData;
 
 trait Data
 {
@@ -16,6 +16,6 @@ trait Data
       return Container::get( $dataName );
     }
 
-    return Container::set( $dataName, ApexData::build( $type, $viewName ) );
+    return Container::set( $dataName, SteelData::build( $type, $viewName ) );
   }
 }

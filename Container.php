@@ -1,19 +1,19 @@
 <?php
 
-namespace Apex;
+namespace Steel;
 
 class Container
 {
   protected static $objects = array( );
 
   public static function available( $class )
-  { 
+  {
     return isset( self::$objects[ $class ] );
   }
 
   public static function set( $name, $object )
   {
-    self::$objects[ $name ] = $object; 
+    self::$objects[ $name ] = $object;
 
     return $object;
   }

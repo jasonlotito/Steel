@@ -1,8 +1,8 @@
 <?php
 
-namespace Apex\Injectors;
-use \Apex\Container;
-use \Apex\Response as ApexResponse;
+namespace Steel\Injectors;
+use \Steel\Container;
+use \Steel\Response as SteelResponse;
 
 trait Response
 {
@@ -13,6 +13,6 @@ trait Response
       return Container::get( 'Response' );
     }
 
-    return Container::set( 'Response', new ApexResponse( ) );
+    return Container::set( 'Response', new SteelResponse( ) );
   }
 }

@@ -1,8 +1,8 @@
 <?php
 
-namespace Apex\Injectors;
-use Apex\Container;
-use Apex\Renderer as ApexRenderer;
+namespace Steel\Injectors;
+use Steel\Container;
+use Steel\Renderer as SteelRenderer;
 
 trait Renderer
 {
@@ -14,6 +14,6 @@ trait Renderer
       return Container::get( $rendererName );
     }
 
-    return Container::set( $rendererName, ApexRenderer::fromEngineType( $renderingEngineType ) );
+    return Container::set( $rendererName, SteelRenderer::fromEngineType( $renderingEngineType ) );
   }
 }

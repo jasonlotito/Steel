@@ -1,16 +1,16 @@
 <?php
 
-namespace Apex\Injectors;
+namespace Steel\Injectors;
 
-use Apex\Container;
-use Apex\Config as ApexConfig;
+use Steel\Container;
+use Steel\Config as SteelConfig;
 
 trait Config
 {
   /**
    * Gets a configuration object
    *
-   * @return \Apex\Interfaces\Config;
+   * @return \Steel\Interfaces\Config;
    */
   protected function getConfig( $configFile = null )
   {
@@ -20,7 +20,7 @@ trait Config
     }
 
     if ( isset( $configFile ) )
-    { 
+    {
       $containerKey = 'Config:' . $configFile;
       $isDefaultSet = Container::available( 'Config' );
       $isCustomSet = Container::available( $containerKey );
@@ -30,7 +30,7 @@ trait Config
         return Container::get( $containerKey );
       }
 
-      $config = new ApexConfig( $configFile );
+      $config = new SteelConfig( $configFile );
 
       if ( $isDefaultSet )
       {

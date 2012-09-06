@@ -1,6 +1,6 @@
 <?php
 
-namespace Apex\Interfaces;
+namespace Steel\Interfaces;
 
 interface Request
 {

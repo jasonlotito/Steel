@@ -1,6 +1,6 @@
 <?php
 
-namespace Apex;
+namespace Steel;
 
 /**
  * Controller
@@ -20,7 +20,7 @@ abstract class Controller
 
   public function __construct( )
   {
-    $this->request = $this->getRequest( ); 
+    $this->request = $this->getRequest( );
     $this->response = $this->getResponse( );
     $this->view = $this->getView( $this->templateName );
   }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Apex;
+namespace Steel;
 
 class Route implements Interfaces\Route
 {
@@ -36,7 +36,7 @@ class Route implements Interfaces\Route
       if ( class_exists( $class ) )
       {
         $entity = new $class( );
-      
+
         if ( ! method_exists( $entity, $method ) )
         {
           throw new \Exception( "$class::$method not found!" );
@@ -52,6 +52,6 @@ class Route implements Interfaces\Route
 
   protected function findRouteInConfig( Interfaces\Config $config )
   {
-    
+
   }
 }

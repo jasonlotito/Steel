@@ -1,9 +1,9 @@
 <?php
 
-namespace Apex\Injectors\View;
+namespace Steel\Injectors\View;
 
-use \Apex\Container;
-use \Apex\View\Template as ApexTemplate;
+use \Steel\Container;
+use \Steel\View\Template as SteelTemplate;
 
 trait Template
 {
@@ -16,6 +16,6 @@ trait Template
       return Container::get( $templateName );
     }
 
-    return Container::set( $templateName, ApexTemplate::create( $templateName ) );
+    return Container::set( $templateName, SteelTemplate::create( $templateName ) );
   }
 }

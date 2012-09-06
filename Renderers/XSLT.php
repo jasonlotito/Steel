@@ -1,13 +1,13 @@
 <?php
 
-namespace Apex\Renderers;
+namespace Steel\Renderers;
 
-use Apex\Interfaces\Renderer;
+use Steel\Interfaces\Renderer;
 
 class XSLT implements Renderer
 {
   use
-    \Apex\Injectors\Config;
+    \Steel\Injectors\Config;
 
   public function getDataType( )
   {
@@ -25,7 +25,7 @@ class XSLT implements Renderer
     $xslDoc = new \DOMDocument( );
     $xslDoc->load( $this->getConfig( )->get( )->directories->templates . $template . '.xsl' );
     $xslt->importStylesheet( $xslDoc );
-    
+
     return $xslt->transformToXML( $data );
   }
 }

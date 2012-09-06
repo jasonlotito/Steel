@@ -1,6 +1,6 @@
 <?php
 
-namespace Apex;
+namespace Steel;
 
 class Request implements Interfaces\Request
 {
@@ -24,7 +24,7 @@ class Request implements Interfaces\Request
 
   public function isConfig( )
   {
-    return isset( $_SERVER['REDIRECT_QUERY_STRING'] ) 
+    return isset( $_SERVER['REDIRECT_QUERY_STRING'] )
       && $_SERVER['REDIRECT_QUERY_STRING'] === $this->getConfig( )->get( )->config;
   }
 

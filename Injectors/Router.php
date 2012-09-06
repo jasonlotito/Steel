@@ -1,8 +1,8 @@
 <?php
 
-namespace Apex\Injectors;
-use Apex\Container;
-use Apex\Router as ApexRouter;
+namespace Steel\Injectors;
+use Steel\Container;
+use Steel\Router as SteelRouter;
 trait Router
 {
   protected function getRouter( $routes )
@@ -12,6 +12,6 @@ trait Router
       return Container::get( 'Router' );
     }
 
-    return Container::set( 'Router', new ApexRouter( $routes ) );
+    return Container::set( 'Router', new SteelRouter( $routes ) );
   }
 }

@@ -1,8 +1,8 @@
 <?php
 
-namespace Apex\Injectors;
-use Apex\Container;
-use Apex\Request as ApexRequest;
+namespace Steel\Injectors;
+use Steel\Container;
+use Steel\Request as SteelRequest;
 trait Request
 {
   protected function getRequest( )
@@ -12,6 +12,6 @@ trait Request
       return Container::get( 'Request' );
     }
 
-    return Container::set( 'Request', new ApexRequest( ) );
+    return Container::set( 'Request', new SteelRequest( ) );
   }
 }

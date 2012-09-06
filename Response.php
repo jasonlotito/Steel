@@ -1,6 +1,6 @@
 <?php
 
-namespace Apex;
+namespace Steel;
 
 class Response
 {

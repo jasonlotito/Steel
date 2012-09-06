@@ -1,33 +1,32 @@
 <?php
 
-namespace Apex;
+namespace Steel;
 
 class Application implements Interfaces\Application
 {
-  use 
-    Injectors\Request, 
-    Injectors\Response,
-    Injectors\Config,
-    Injectors\Router; 
+  use Injectors\Request;
+  use Injectors\Response;
+  use Injectors\Config;
+  use Injectors\Router;
 
   /**
    * Response
    *
-   * @return Apex\Response;
+   * @return Response;
    */
   protected $response;
 
   /**
    * Request
    *
-   * @return Apex\Request;
+   * @return Request;
    */
   protected $request;
 
   /**
    * Request
    *
-   * @return Apex\Request;
+   * @return Request;
    */
   protected $router;
 
@@ -46,14 +45,14 @@ class Application implements Interfaces\Application
     if ( ! isset( $self ) )
     {
       $self = new self( $config );
-    }    
+    }
 
     return $self;
   }
 
   public function run( )
   {
-    if ( $this->request->isConfig( ) ) 
+    if ( $this->request->isConfig( ) )
     {
       $this->runConfig( );
       return;

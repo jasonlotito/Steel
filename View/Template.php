@@ -1,6 +1,6 @@
 <?php
 
-namespace Apex\View;
+namespace Steel\View;
 
 class Template
 {

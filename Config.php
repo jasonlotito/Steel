@@ -1,6 +1,6 @@
 <?php
 
-namespace Apex;
+namespace Steel;
 
 class Config implements Interfaces\Config
 {
@@ -16,7 +16,7 @@ class Config implements Interfaces\Config
 
   protected function parse( )
   {
-    $this->config = json_decode( file_get_contents( $this->file ) );  
+    $this->config = json_decode( file_get_contents( $this->file ) );
   }
 
   public function get( )
