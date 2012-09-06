@@ -9,11 +9,11 @@ trait Renderer
   protected function getRenderer( $renderingEngineType )
   {
     $rendererName = 'Renderer' . $renderingEngineType;
-    if ( Container::available( $rendererName ) )
+    if ( Container::isStored( $rendererName ) )
     {
-      return Container::get( $rendererName );
+      return Container::getStored( $rendererName );
     }
 
-    return Container::set( $rendererName, SteelRenderer::fromEngineType( $renderingEngineType ) );
+    return Container::store( $rendererName, SteelRenderer::fromEngineType( $renderingEngineType ) );
   }
 }

@@ -8,11 +8,11 @@ trait Response
 {
   protected function getResponse( )
   {
-    if ( Container::available( 'Response' ) )
+    if ( Container::isStored( 'Response' ) )
     {
-      return Container::get( 'Response' );
+      return Container::getStored( 'Response' );
     }
 
-    return Container::set( 'Response', new SteelResponse( ) );
+    return Container::store( 'Response', new SteelResponse( ) );
   }
 }

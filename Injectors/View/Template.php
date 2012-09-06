@@ -11,11 +11,11 @@ trait Template
   {
     $templateName = $viewName . 'Template';
 
-    if ( Container::available( $templateName ) )
+    if ( Container::isStored( $templateName ) )
     {
-      return Container::get( $templateName );
+      return Container::getStored( $templateName );
     }
 
-    return Container::set( $templateName, SteelTemplate::create( $templateName ) );
+    return Container::store( $templateName, SteelTemplate::create( $templateName ) );
   }
 }

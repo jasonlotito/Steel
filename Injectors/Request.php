@@ -7,11 +7,11 @@ trait Request
 {
   protected function getRequest( )
   {
-    if ( Container::available( 'Request' ) )
+    if ( Container::isStored( 'Request' ) )
     {
-      return Container::get( 'Request' );
+      return Container::getStored( 'Request' );
     }
 
-    return Container::set( 'Request', new SteelRequest( ) );
+    return Container::store( 'Request', new SteelRequest( ) );
   }
 }

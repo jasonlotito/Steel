@@ -11,11 +11,11 @@ trait Data
   {
     $dataName = $viewName . 'Data';
 
-    if ( Container::available( $dataName ) )
+    if ( Container::isStored( $dataName ) )
     {
-      return Container::get( $dataName );
+      return Container::getStored( $dataName );
     }
 
-    return Container::set( $dataName, SteelData::build( $type, $viewName ) );
+    return Container::store( $dataName, SteelData::build( $type, $viewName ) );
   }
 }

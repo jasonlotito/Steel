@@ -7,11 +7,11 @@ trait Router
 {
   protected function getRouter( $routes )
   {
-    if ( Container::available( 'Router' ) )
+    if ( Container::isStored( 'Router' ) )
     {
-      return Container::get( 'Router' );
+      return Container::getStored( 'Router' );
     }
 
-    return Container::set( 'Router', new SteelRouter( $routes ) );
+    return Container::store( 'Router', new SteelRouter( $routes ) );
   }
 }

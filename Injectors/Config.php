@@ -14,32 +14,32 @@ trait Config
    */
   protected function getConfig( $configFile = null )
   {
-    if ( Container::available( 'Config' ) && $configFile == null )
+    if ( Container::isStored( 'Config' ) && $configFile == null )
     {
-      return Container::get( 'Config' );
+      return Container::getStored( 'Config' );
     }
 
     if ( isset( $configFile ) )
     {
       $containerKey = 'Config:' . $configFile;
-      $isDefaultSet = Container::available( 'Config' );
-      $isCustomSet = Container::available( $containerKey );
+      $isDefaultSet = Container::isStored( 'Config' );
+      $isCustomSet = Container::isStored( $containerKey );
 
       if ( $isCustomSet )
       {
-        return Container::get( $containerKey );
+        return Container::getStored( $containerKey );
       }
 
       $config = new SteelConfig( $configFile );
 
       if ( $isDefaultSet )
       {
-        return Container::set( $containerKey, $config );
+        return Container::store( $containerKey, $config );
       }
       else
       {
-        Container::set( 'Config', $config );
-        return Container::set( $containerKey, $config );
+        Container::store( 'Config', $config );
+        return Container::store( $containerKey, $config );
       }
     }
 

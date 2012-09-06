@@ -9,11 +9,11 @@ trait View
 {
   public function getView( $viewName = 'View' )
   {
-    if ( Container::available( $viewName ) )
+    if ( Container::isStored( $viewName ) )
     {
-      return Container::get( $viewName );
+      return Container::getStored( $viewName );
     }
 
-    return Container::set( $viewName, SteelView::create( $viewName ) );
+    return Container::store( $viewName, SteelView::create( $viewName ) );
   }
 }
