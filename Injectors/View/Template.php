@@ -7,14 +7,14 @@ use \Steel\View\Template as SteelTemplate;
 
 trait Template
 {
-    public function getTemplate( $viewName )
+    public function getTemplate($viewName)
     {
         $templateName = $viewName . 'Template';
 
-        if (Container::isStored( $templateName )) {
-            return Container::getStored( $templateName );
+        if (Container::isStored($templateName)) {
+            return Container::getStored($templateName);
         }
 
-        return Container::store( $templateName, SteelTemplate::create( $templateName ) );
+        return Container::store($templateName, SteelTemplate::create($templateName));
     }
 }

@@ -30,15 +30,15 @@ class Application implements Interfaces\Application
      */
     protected $router;
 
-    protected function __construct( $config = null )
+    protected function __construct($config = null)
     {
-        $this->config = $this->getConfig( $config );
+        $this->config = $this->getConfig($config);
         $this->response = $this->getResponse();
         $this->request = $this->getRequest();
-        $this->router = $this->getRouter( $this->config->get()->routes );
+        $this->router = $this->getRouter($this->config->get()->routes);
     }
 
-    public static function start( $config = null )
+    public static function start($config = null)
     {
         static $self;
 
@@ -56,7 +56,7 @@ class Application implements Interfaces\Application
             return;
         }
 
-        $route = $this->router->getRoute( $this->request );
+        $route = $this->router->getRoute($this->request);
         $route->follow();
     }
 
@@ -64,9 +64,9 @@ class Application implements Interfaces\Application
     {
         $config = (array) $this->config->get();
         echo '<pre>';
-        var_dump( $_SERVER, $_ENV );
-        var_dump( $this->request->accepts( 'text/html' ) );
-        var_dump( $this->request->accepts( 'application/json' ) );
+        var_dump($_SERVER, $_ENV);
+        var_dump($this->request->accepts('text/html'));
+        var_dump($this->request->accepts('application/json'));
 
         phpinfo();
     }

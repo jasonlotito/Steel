@@ -18,7 +18,7 @@ interface Container
      * @param string $name The name the entity is stored under
      * @return boolean
      */
-    public static function isStored( $name );
+    public static function isStored($name);
 
     /**
      * Stores the object by the name provided
@@ -28,7 +28,7 @@ interface Container
      * @param mixed $object The entity being stored
      * @return mixed
      */
-    public static function store( $name, $object );
+    public static function store($name, $object);
 
     /**
      * Returns the object stored
@@ -36,5 +36,5 @@ interface Container
      * @param string $name
      * @return mixed
      */
-    public static function getStored( $name );
+    public static function getStored($name);
 }

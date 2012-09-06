@@ -8,7 +8,7 @@ class Config implements Interfaces\Config
 
     protected $config;
 
-    public function __construct( $file )
+    public function __construct($file)
     {
         $this->file = $file;
         $this->parse();
@@ -16,7 +16,7 @@ class Config implements Interfaces\Config
 
     protected function parse()
     {
-        $this->config = json_decode( file_get_contents( $this->file ) );
+        $this->config = json_decode(file_get_contents($this->file));
     }
 
     public function get()

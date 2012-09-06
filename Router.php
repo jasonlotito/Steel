@@ -11,12 +11,12 @@ class Router implements Interfaces\Router
      */
     protected $routes;
 
-    public function __construct( $routes )
+    public function __construct($routes)
     {
         $this->routes = $routes;
     }
 
-    public function getRoute( Interfaces\Request $request )
+    public function getRoute(Interfaces\Request $request)
     {
         $action = $request->getAction();
         $entity = $request->getEntity();

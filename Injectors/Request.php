@@ -9,10 +9,10 @@ trait Request
 {
     protected function getRequest()
     {
-        if (Container::isStored( 'Request' )) {
-            return Container::getStored( 'Request' );
+        if (Container::isStored('Request')) {
+            return Container::getStored('Request');
         }
 
-        return Container::store( 'Request', new SteelRequest() );
+        return Container::store('Request', new SteelRequest());
     }
 }

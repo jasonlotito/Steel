@@ -22,42 +22,42 @@ class View
 
     protected $config;
 
-    protected function __construct( $name )
+    protected function __construct($name)
     {
         $this->config = $this->getConfig();
-        $this->name = stripslashes( $name );
-        $this->template = str_replace( '\\', '/', $name );
-        $this->renderer = $this->getRenderer( $this->config->get()->renderer );
-        $this->data = $this->getData( $this->name, $this->renderer->getDataType() );
+        $this->name = stripslashes($name);
+        $this->template = str_replace('\\', '/', $name);
+        $this->renderer = $this->getRenderer($this->config->get()->renderer);
+        $this->data = $this->getData($this->name, $this->renderer->getDataType());
         $this->baseTemplate = $this->config->get()->baseTemplate;
     }
 
-    public static function create( $name )
+    public static function create($name)
     {
         return new self( $name );
     }
 
-    public function setRenderer( Interfaces\Renderer $renderer )
+    public function setRenderer(Interfaces\Renderer $renderer)
     {
         $this->renderer = $renderer;
     }
 
-    public function setTemplate( $template )
+    public function setTemplate($template)
     {
-        $this->template = $this->getTemplate( $this->name );
+        $this->template = $this->getTemplate($this->name);
     }
 
-    public function attach( $name, $value )
+    public function attach($name, $value)
     {
-        $this->data->setData( $name, $value );
+        $this->data->setData($name, $value);
     }
 
     public function output()
     {
-        $data = $this->renderer->render( $this->data, $this->template );
-        $container = $this->getData( 'BaseTemplate', $this->renderer->getDataType() );
-        $container->setData( 'content', $data );
+        $data = $this->renderer->render($this->data, $this->template);
+        $container = $this->getData('BaseTemplate', $this->renderer->getDataType());
+        $container->setData('content', $data);
 
-        echo $this->renderer->render( $container, $this->baseTemplate );
+        echo $this->renderer->render($container, $this->baseTemplate);
     }
 }

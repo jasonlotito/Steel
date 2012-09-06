@@ -19,13 +19,13 @@ class XSLT implements Renderer
         return 'XSLT';
     }
 
-    public function render( $data, $template )
+    public function render($data, $template)
     {
         $xslt = new \XSLTProcessor();
         $xslDoc = new \DOMDocument();
-        $xslDoc->load( $this->getConfig()->get()->directories->templates . $template . '.xsl' );
-        $xslt->importStylesheet( $xslDoc );
+        $xslDoc->load($this->getConfig()->get()->directories->templates . $template . '.xsl');
+        $xslt->importStylesheet($xslDoc);
 
-        return $xslt->transformToXML( $data );
+        return $xslt->transformToXML($data);
     }
 }

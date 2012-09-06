@@ -17,7 +17,7 @@ class Route implements Interfaces\Route
      * @param string $entity Entities name
      * @param string $action Actions name
      */
-    public function __construct( $entity, $action )
+    public function __construct($entity, $action)
     {
         $this->entity = $entity;
         $this->action = $action;
@@ -33,10 +33,10 @@ class Route implements Interfaces\Route
         $method = (string) isset( $route->method ) ? $route->method : $this->action;
 
         try {
-            if (class_exists( $class )) {
+            if (class_exists($class)) {
                 $entity = new $class();
 
-                if (!method_exists( $entity, $method )) {
+                if (!method_exists($entity, $method)) {
                     throw new \Exception( "$class::$method not found!" );
                 }
                 $entity->$method();
@@ -46,7 +46,7 @@ class Route implements Interfaces\Route
         }
     }
 
-    protected function findRouteInConfig( Interfaces\Config $config )
+    protected function findRouteInConfig(Interfaces\Config $config)
     {
     }
 }

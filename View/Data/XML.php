@@ -6,42 +6,42 @@ class XML extends \DOMDocument
 {
     protected $root;
 
-    public function __construct( $rootName )
+    public function __construct($rootName)
     {
-        parent::__construct( '1.0', 'UTF-8' );
-        $this->root = $this->createElement( $rootName );
-        $this->appendChild( $this->root );
+        parent::__construct('1.0', 'UTF-8');
+        $this->root = $this->createElement($rootName);
+        $this->appendChild($this->root);
     }
 
-    public function setData( $name, $value, $parentNode = null )
+    public function setData($name, $value, $parentNode = null)
     {
-        if (is_array( $value )) {
-            $newNode = $this->createElement( $name );
+        if (is_array($value)) {
+            $newNode = $this->createElement($name);
             $singularName = null;
 
-            if (isset( $value[ 0 ] )) {
-                $singularName = $this->inflector( $name );
+            if (isset( $value[0] )) {
+                $singularName = $this->inflector($name);
             }
 
-            foreach ( $value as $key => $val ) {
-                $this->setData( isset( $singularName ) ? $singularName : $key, $val, $newNode );
+            foreach ($value as $key => $val) {
+                $this->setData(isset( $singularName ) ? $singularName : $key, $val, $newNode);
             }
 
-            $this->root->appendChild( $newNode );
+            $this->root->appendChild($newNode);
             return;
         }
 
-        $ele = $this->createElement( $name );
-        $ele->appendChild( $this->createCDATASection( $value ) );
+        $ele = $this->createElement($name);
+        $ele->appendChild($this->createCDATASection($value));
 
         if (isset( $parentNode )) {
-            $parentNode->appendChild( $ele );
+            $parentNode->appendChild($ele);
         } else {
-            $this->root->appendChild( $ele );
+            $this->root->appendChild($ele);
         }
     }
 
-    private function inflector( $word )
+    private function inflector($word)
     {
         $rules = array(
             'ss' => false,
@@ -54,8 +54,8 @@ class XML extends \DOMDocument
             's' => ''
         );
 
-        foreach ( array_keys( $rules ) as $key ) {
-            if (substr( $word, ( strlen( $key ) * -1 ) ) != $key) {
+        foreach (array_keys($rules) as $key) {
+            if (substr($word, ( strlen($key) * -1 )) != $key) {
                 continue;
             }
 
@@ -63,7 +63,7 @@ class XML extends \DOMDocument
                 return $word;
             }
 
-            return substr( $word, 0, strlen( $word ) - strlen( $key ) ) . $rules[ $key ];
+            return substr($word, 0, strlen($word) - strlen($key)) . $rules[$key];
         }
 
         return $word;

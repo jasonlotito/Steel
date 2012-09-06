@@ -13,22 +13,22 @@ class Request implements Interfaces\Request
 
     public function getAction()
     {
-        return $_SERVER[ 'REQUEST_METHOD' ];
+        return $_SERVER['REQUEST_METHOD'];
     }
 
     public function getEntity()
     {
-        return isset( $_SERVER[ 'REDIRECT_URL' ] ) ? $_SERVER[ 'REDIRECT_URL' ] : '/';
+        return isset( $_SERVER['REDIRECT_URL'] ) ? $_SERVER['REDIRECT_URL'] : '/';
     }
 
     public function isConfig()
     {
-        return isset( $_SERVER[ 'REDIRECT_QUERY_STRING' ] )
-            && $_SERVER[ 'REDIRECT_QUERY_STRING' ] === $this->getConfig()->get()->config;
+        return isset( $_SERVER['REDIRECT_QUERY_STRING'] )
+            && $_SERVER['REDIRECT_QUERY_STRING'] === $this->getConfig()->get()->config;
     }
 
-    public function accepts( $type )
+    public function accepts($type)
     {
-        return false !== stripos( $_SERVER[ 'HTTP_ACCEPT' ], $type );
+        return false !== stripos($_SERVER['HTTP_ACCEPT'], $type);
     }
 }

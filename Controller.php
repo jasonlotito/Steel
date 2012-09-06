@@ -22,17 +22,17 @@ abstract class Controller
     {
         $this->request = $this->getRequest();
         $this->response = $this->getResponse();
-        $this->view = $this->getView( $this->templateName );
+        $this->view = $this->getView($this->templateName);
     }
 
-    public function setView( $view )
+    public function setView($view)
     {
         $this->view = $view;
     }
 
-    protected function attach( $name, $value )
+    protected function attach($name, $value)
     {
-        return $this->view->attach( $name, $value );
+        return $this->view->attach($name, $value);
     }
 
     protected function output()

@@ -12,28 +12,28 @@ trait Config
      *
      * @return \Steel\Interfaces\Config;
      */
-    protected function getConfig( $configFile = null )
+    protected function getConfig($configFile = null)
     {
-        if (Container::isStored( 'Config' ) && $configFile == null) {
-            return Container::getStored( 'Config' );
+        if (Container::isStored('Config') && $configFile == null) {
+            return Container::getStored('Config');
         }
 
         if (isset( $configFile )) {
             $containerKey = 'Config:' . $configFile;
-            $isDefaultSet = Container::isStored( 'Config' );
-            $isCustomSet = Container::isStored( $containerKey );
+            $isDefaultSet = Container::isStored('Config');
+            $isCustomSet = Container::isStored($containerKey);
 
             if ($isCustomSet) {
-                return Container::getStored( $containerKey );
+                return Container::getStored($containerKey);
             }
 
             $config = new SteelConfig( $configFile );
 
             if ($isDefaultSet) {
-                return Container::store( $containerKey, $config );
+                return Container::store($containerKey, $config);
             } else {
-                Container::store( 'Config', $config );
-                return Container::store( $containerKey, $config );
+                Container::store('Config', $config);
+                return Container::store($containerKey, $config);
             }
         }
 

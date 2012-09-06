@@ -8,5 +8,5 @@ interface Renderer
 
     public function getTemplateType();
 
-    public function render( $data, $template );
+    public function render($data, $template);
 }

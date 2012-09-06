@@ -7,13 +7,13 @@ use Steel\Renderer as SteelRenderer;
 
 trait Renderer
 {
-    protected function getRenderer( $renderingEngineType )
+    protected function getRenderer($renderingEngineType)
     {
         $rendererName = 'Renderer' . $renderingEngineType;
-        if (Container::isStored( $rendererName )) {
-            return Container::getStored( $rendererName );
+        if (Container::isStored($rendererName)) {
+            return Container::getStored($rendererName);
         }
 
-        return Container::store( $rendererName, SteelRenderer::fromEngineType( $renderingEngineType ) );
+        return Container::store($rendererName, SteelRenderer::fromEngineType($renderingEngineType));
     }
 }

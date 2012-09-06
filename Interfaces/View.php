@@ -4,7 +4,7 @@ namespace Steel;
 
 interface View
 {
-    public static function create( $view, $name = '' );
+    public static function create($view, $name = '');
 
-    public function attach( $name, $value );
+    public function attach($name, $value);
 }
