@@ -3,9 +3,14 @@
 
 Licensed under the GNU Public License, GNU Affero Public License, and the Lesser GNU Public License.
 
-## Notes
+## TODO
 
-Apparently there is Steel Framework from Oracle already.  So, that means I need to come up with a new name and change all the namespaces.
+* Move each package into a self contain bundle.  Interfaces and Injectors should be move in there as well.
+* Tests for each package.
+* Redo the way dispatchs are done.
+* Clarify way routing is done
+* Import code from other version of Steel into this version (much improved).
+* Settle on a simple way to manage templates.
 
 ## Author
 
