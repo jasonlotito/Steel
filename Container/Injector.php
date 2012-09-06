@@ -19,12 +19,12 @@ trait Injector
      */
     protected $container;
 
-    protected function getContainer( $containerName = 'Container' )
+    protected function getContainer($containerName = 'Container')
     {
-        if (Container::isStored( $containerName )) {
-            return $this->container = Container::getStored( $containerName );
+        if (Container::isStored($containerName)) {
+            return $this->container = Container::getStored($containerName);
         }
 
-        return $this->container = Container::store( $containerName, new Container() );
+        return $this->container = Container::store($containerName, new Container());
     }
 }

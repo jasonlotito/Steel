@@ -2,7 +2,14 @@
 
 namespace Steel;
 
-class Container implements Interfaces\Container
+use Steel\Interfaces\Container as IContainer;
+
+/**
+ * Container
+ *
+ * @module Container
+ */
+class Container implements IContainer
 {
     const EXCEPTION_NO_NAME_FOUND = 'No %s found.';
 
@@ -12,9 +19,9 @@ class Container implements Interfaces\Container
      * @param string $class
      * @return bool
      */
-    public static function isStored( $class )
+    public static function isStored($class)
     {
-        return isset( self::$objects[ $class ] );
+        return isset( self::$objects[$class] );
     }
 
     /**
@@ -22,9 +29,9 @@ class Container implements Interfaces\Container
      * @param mixed $object
      * @return mixed
      */
-    public static function store( $name, $object )
+    public static function store($name, $object)
     {
-        self::$objects[ $name ] = $object;
+        self::$objects[$name] = $object;
 
         return $object;
     }
@@ -34,12 +41,12 @@ class Container implements Interfaces\Container
      * @return mixed
      * @throws \InvalidArgumentException
      */
-    public static function getStored( $name )
+    public static function getStored($name)
     {
-        if (self::isStored( $name )) {
-            return self::$objects[ $name ];
+        if (self::isStored($name)) {
+            return self::$objects[$name];
         }
 
-        throw new \InvalidArgumentException( sprintf( self::EXCEPTION_NO_NAME_FOUND, $name ) );
+        throw new \InvalidArgumentException(sprintf(self::EXCEPTION_NO_NAME_FOUND, $name));
     }
 }
