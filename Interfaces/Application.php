@@ -4,6 +4,7 @@ namespace Steel\Interfaces;
 
 interface Application
 {
-  public static function start( );
-  public function run( );
+    public static function start();
+
+    public function run();
 }

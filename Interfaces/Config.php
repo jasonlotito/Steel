@@ -4,6 +4,7 @@ namespace Steel\Interfaces;
 
 interface Config
 {
-  public function __construct( $uri );
-  public function get( );
+    public function __construct( $uri );
+
+    public function get();
 }

@@ -4,7 +4,6 @@ namespace Steel\Interfaces;
 
 /**
  * Container
- *
  * Container Interface
  *
  * @module ${MODULE}
@@ -23,7 +22,6 @@ interface Container
 
     /**
      * Stores the object by the name provided
-     *
      * The object can be any PHP object.
      *
      * @param string $name The name we are storing the object as

@@ -4,6 +4,7 @@ namespace Steel\Interfaces;
 
 interface Request
 {
-  public function getAction( );
-  public function getEntity( );
+    public function getAction();
+
+    public function getEntity();
 }

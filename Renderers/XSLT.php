@@ -6,26 +6,26 @@ use Steel\Interfaces\Renderer;
 
 class XSLT implements Renderer
 {
-  use
+    use
     \Steel\Injectors\Config;
 
-  public function getDataType( )
-  {
-    return 'XML';
-  }
+    public function getDataType()
+    {
+        return 'XML';
+    }
 
-  public function getTemplateType( )
-  {
-    return 'XSLT';
-  }
+    public function getTemplateType()
+    {
+        return 'XSLT';
+    }
 
-  public function render( $data, $template )
-  {
-    $xslt = new \XSLTProcessor( );
-    $xslDoc = new \DOMDocument( );
-    $xslDoc->load( $this->getConfig( )->get( )->directories->templates . $template . '.xsl' );
-    $xslt->importStylesheet( $xslDoc );
+    public function render( $data, $template )
+    {
+        $xslt = new \XSLTProcessor();
+        $xslDoc = new \DOMDocument();
+        $xslDoc->load( $this->getConfig()->get()->directories->templates . $template . '.xsl' );
+        $xslt->importStylesheet( $xslDoc );
 
-    return $xslt->transformToXML( $data );
-  }
+        return $xslt->transformToXML( $data );
+    }
 }

@@ -7,13 +7,12 @@ use \Steel\View as SteelView;
 
 trait View
 {
-  public function getView( $viewName = 'View' )
-  {
-    if ( Container::isStored( $viewName ) )
+    public function getView( $viewName = 'View' )
     {
-      return Container::getStored( $viewName );
-    }
+        if (Container::isStored( $viewName )) {
+            return Container::getStored( $viewName );
+        }
 
-    return Container::store( $viewName, SteelView::create( $viewName ) );
-  }
+        return Container::store( $viewName, SteelView::create( $viewName ) );
+    }
 }
