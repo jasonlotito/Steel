@@ -2,6 +2,9 @@
 
 namespace Steel;
 
+/**
+ * Router
+ */
 class Router implements Interfaces\Router
 {
     /**
@@ -16,6 +19,10 @@ class Router implements Interfaces\Router
         $this->routes = $routes;
     }
 
+    /**
+     * @param Interfaces\Request $request
+     * @return Route
+     */
     public function getRoute(Interfaces\Request $request)
     {
         $action = $request->getAction();

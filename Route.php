@@ -2,13 +2,23 @@
 
 namespace Steel;
 
-class Route implements Interfaces\Route
-{
-    use
-    Injectors\Config;
+use Steel\Interfaces\Route as IRoute;
 
+/**
+ * Route
+ */
+class Route implements IRoute
+{
+    use Injectors\Config;
+
+    /**
+     * @var string
+     */
     protected $entity;
 
+    /**
+     * @var string
+     */
     protected $action;
 
     /**
@@ -23,6 +33,9 @@ class Route implements Interfaces\Route
         $this->action = $action;
     }
 
+    /**
+     * @throws \Exception
+     */
     public function follow()
     {
         $config = $this->getConfig();
@@ -46,6 +59,9 @@ class Route implements Interfaces\Route
         }
     }
 
+    /**
+     * @param Interfaces\Config $config
+     */
     protected function findRouteInConfig(Interfaces\Config $config)
     {
     }
