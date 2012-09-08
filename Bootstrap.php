@@ -23,23 +23,6 @@ class Bootstrap implements IBootstrap
     }
 
     /**
-     * Set the include path
-     *
-     * @param array $paths
-     * @return self
-     */
-    public function setIncludePath($paths = array())
-    {
-        set_include_path(
-            implode(PATH_SEPARATOR, $paths) . PATH_SEPARATOR .
-            __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . PATH_SEPARATOR .
-            get_include_path()
-        );
-
-        return $this;
-    }
-
-    /**
      * Initialize
      *
      * @return self
