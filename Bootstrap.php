@@ -2,10 +2,12 @@
 
 namespace Steel;
 
+use Steel\Interfaces\Bootstrap as IBootstrap;
+
 /**
  *
  */
-class Bootstrap implements Interfaces\Bootstrap
+class Bootstrap implements IBootstrap
 {
     protected $fileExtension = '.php';
 
@@ -27,8 +29,8 @@ class Bootstrap implements Interfaces\Bootstrap
     {
         set_include_path(
             implode(PATH_SEPARATOR, $paths) . PATH_SEPARATOR .
-                __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . PATH_SEPARATOR .
-                get_include_path()
+            __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . PATH_SEPARATOR .
+            get_include_path()
         );
 
         return $this;
