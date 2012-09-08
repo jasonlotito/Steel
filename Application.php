@@ -38,7 +38,7 @@ class Application implements Interfaces\Application
      */
     protected function __construct($config = null)
     {
-        $this->config = $this->getConfig($config);
+        $this->config = $this->getConfig($config['configDir'] . '/' . $config['configCore'] . $config['configExt']);
         $this->response = $this->getResponse();
         $this->request = $this->getRequest();
         $this->router = $this->getRouter($this->config->get()->routes);
