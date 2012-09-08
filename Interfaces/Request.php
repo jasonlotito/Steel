@@ -9,5 +9,5 @@ interface Request
 {
     public function getAction();
     public function getEntity();
-    public function accepts();
+    public function accepts($type);
 }

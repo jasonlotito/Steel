@@ -2,10 +2,12 @@
 
 namespace Steel;
 
+use Steel\Interfaces\Request as IRequest;
+
 /**
  *
  */
-class Request implements Interfaces\Request
+class Request implements IRequest
 {
   use Injectors\Config;
 
