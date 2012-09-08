@@ -5,6 +5,9 @@ namespace Steel\Injectors;
 use Steel\Container;
 use Steel\Config as SteelConfig;
 
+/**
+ * Config
+ */
 trait Config
 {
     /**
