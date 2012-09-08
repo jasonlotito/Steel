@@ -2,10 +2,13 @@
 
 namespace Steel;
 
+// Includes
+require_once __DIR__ . '/Interfaces/Bootstrap.php';
+
 use Steel\Interfaces\Bootstrap as IBootstrap;
 
 /**
- *
+ * Bootstrap File
  */
 class Bootstrap implements IBootstrap
 {

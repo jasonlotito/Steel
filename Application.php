@@ -3,7 +3,7 @@
 namespace Steel;
 
 /**
- *
+
  */
 class Application implements Interfaces\Application
 {
@@ -53,8 +53,8 @@ class Application implements Interfaces\Application
     {
         static $self;
 
-        if (!isset($self)) {
-            $self = new self($config);
+        if (!isset( $self )) {
+            $self = new self( $config );
         }
 
         return $self;
@@ -70,11 +70,11 @@ class Application implements Interfaces\Application
     }
 
     /**
-     *
+
      */
     public function runConfig()
     {
-        $config = (array)$this->config->get();
+        $config = (array) $this->config->get();
         echo '<pre>';
         var_dump($_SERVER, $_ENV);
         var_dump($this->request->accepts('text/html'));
