@@ -49,4 +49,9 @@ class Container implements IContainer
 
         throw new \InvalidArgumentException(sprintf(self::EXCEPTION_NO_NAME_FOUND, $name));
     }
+
+    public static function whatsContained()
+    {
+        return array_keys(self::$objects);
+    }
 }

@@ -2,45 +2,66 @@
 
 namespace Steel;
 
-/**
+use Steel\Injectors\Request;
+use Steel\Injectors\Response;
+use Steel\Injectors\Config;
+use Steel\Injectors\Router;
 
+use Steel\Container\Injector as Container;
+
+/**
+ * Application
  */
 class Application implements Interfaces\Application
 {
-    use Injectors\Request;
-    use Injectors\Response;
-    use Injectors\Config;
-    use Injectors\Router;
+    use Request;
+    use Response;
+    use Config;
+    use Router;
+    use Container;
 
     /**
      * Response
      *
-     * @return Response;
+     * @var Response;
      */
     protected $response;
 
     /**
      * Request
      *
-     * @return Request;
+     * @var Request;
      */
     protected $request;
 
     /**
      * Request
      *
-     * @return Request;
+     * @var Request;
      */
     protected $router;
+
+    /**
+     * Application Config
+     *
+     * @var array
+     */
+    protected $applicationConfig;
+
+    protected $container;
 
     /**
      * @param null $config
      */
     protected function __construct($config = null)
     {
-        $this->config = $this->getConfig($config['configDir'] . '/' . $config['configCore'] . $config['configExt']);
+        $this->container = $this->getContainer();
+        $this->applicationConfig = $config;
+        $this->config = $this->getConfig($this->getCoreConfigurationFile());
         $this->response = $this->getResponse();
         $this->request = $this->getRequest();
+        $contained = $this->getContainer()->whatsContained();
+        var_dump($contained);
         $this->router = $this->getRouter($this->config->get()->routes);
     }
 
@@ -81,5 +102,49 @@ class Application implements Interfaces\Application
         var_dump($this->request->accepts('application/json'));
 
         phpinfo();
+    }
+
+    /**
+     * Is the application in configuration mode
+     *
+     * @return boolean
+     */
+    public function isApplicationInConfigMode()
+    {
+        return $this->applicationConfig['applicationConf'];
+    }
+
+    public function isApplicationInDebugMode()
+    {
+        return $this->applicationConfig['applicationDebug'];
+    }
+
+    public function applicationDirectory()
+    {
+        return $this->applicationConfig['applicationDir'];
+    }
+
+    public function applicationEnvironment()
+    {
+        return $this->applicationConfig['applicationEnv'];
+    }
+
+    public function getCoreConfigurationFile()
+    {
+        return
+            $this->getConfigurationDirectory()
+            . DIRECTORY_SEPARATOR
+            . $this->applicationConfig['configCore']
+            . $this->getConfigurationExtension() ;
+    }
+
+    public function getConfigurationDirectory()
+    {
+        return $this->applicationConfig['configDir'];
+    }
+
+    public function getConfigurationExtension()
+    {
+        return $this->applicationConfig['configExt'];
     }
 }

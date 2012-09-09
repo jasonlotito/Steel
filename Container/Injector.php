@@ -19,6 +19,10 @@ trait Injector
      */
     protected $container;
 
+    /**
+     * @param string $containerName
+     * @return Container
+     */
     protected function getContainer($containerName = 'Container')
     {
         if (Container::isStored($containerName)) {
