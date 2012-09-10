@@ -20,6 +20,7 @@ class Bootstrap implements IBootstrap
     protected function __construct()
     {
         $this->register();
+        $this->registerErrorHandler();
     }
 
     /**
@@ -46,13 +47,31 @@ class Bootstrap implements IBootstrap
         spl_autoload_register(array($this, 'autoLoad'));
     }
 
+    protected function registerErrorHandler()
+    {
+        set_error_handler(array($this, 'errorHandler'));
+    }
+
     /**
-     * Autoloader
+     * Auto Loader
      *
      * @param string $name
      */
     public function autoLoad($name)
     {
         require_once str_replace(array('\\', '_'), '/', $name) . $this->fileExtension;
+    }
+
+    public function errorHandler( $severity, $message, $fileName, $lineNumber )
+    {
+        if ( error_reporting() == 0)
+        {
+            return;
+        }
+
+        if ( error_reporting() & $severity )
+        {
+            throw new \ErrorException($message, 0, $severity, $fileName, $lineNumber);
+        }
     }
 }

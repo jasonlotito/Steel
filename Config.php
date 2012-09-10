@@ -16,11 +16,16 @@ class Config implements Interfaces\Config
 
     protected function parse()
     {
-        $this->config = json_decode(file_get_contents($this->file));
+        $this->config = (simplexml_load_file($this->file));
     }
 
     public function get()
     {
         return $this->config;
+    }
+
+    function __get($name)
+    {
+        return $this->config->{$name};
     }
 }

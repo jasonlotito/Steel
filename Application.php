@@ -61,7 +61,8 @@ class Application implements Interfaces\Application
         $this->response = $this->getResponse();
         $this->request = $this->getRequest();
         $contained = $this->getContainer()->whatsContained();
-        var_dump($contained);
+//        var_dump($contained);
+        var_dump($this->config->get());
         $this->router = $this->getRouter($this->config->get()->routes);
     }
 

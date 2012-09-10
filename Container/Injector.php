@@ -14,10 +14,6 @@ use Steel\Container;
  */
 trait Injector
 {
-    /**
-     * @var
-     */
-    protected $container;
 
     /**
      * @param string $containerName
@@ -26,9 +22,9 @@ trait Injector
     protected function getContainer($containerName = 'Container')
     {
         if (Container::isStored($containerName)) {
-            return $this->container = Container::getStored($containerName);
+            return Container::getStored($containerName);
         }
 
-        return $this->container = Container::store($containerName, new Container());
+        return Container::store($containerName, new Container());
     }
 }

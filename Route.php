@@ -9,6 +9,8 @@ use Steel\Interfaces\Route as IRoute;
  */
 class Route implements IRoute
 {
+    const EXCEPTION_MISSING_ENTITY_OR_ACTION = 'Missing entity (%s) or action (%s).';
+    const EXCEPTION_ENTITY_METHOD_NOT_FOUND = '%s::%s not found!';
     use Injectors\Config;
 
     /**
@@ -29,8 +31,14 @@ class Route implements IRoute
      */
     public function __construct($entity, $action)
     {
-        $this->entity = $entity;
-        $this->action = $action;
+        if (empty( $entity ) || empty( $action )) {
+            throw new \InvalidArgumentException( sprintf(self::EXCEPTION_MISSING_ENTITY_OR_ACTION, $entity, $action) );
+        } else {
+            $this->entity = $entity;
+            $this->action = $action;
+        }
+
+        var_dump($this);
     }
 
     /**
@@ -38,24 +46,36 @@ class Route implements IRoute
      */
     public function follow()
     {
-        $config = $this->getConfig();
-        $namespace = $config->get()->namespace;
-
-        $route = $config->get()->routes->{$this->action}->{$this->entity};
-        $class = $config->get()->namespace . '\\' . $route->class;
-        $method = (string) isset( $route->method ) ? $route->method : $this->action;
-
         try {
-            if (class_exists($class)) {
-                $entity = new $class();
+            $config = $this->getConfig();
+            $namespace = $config->get()->namespace;
 
-                if (!method_exists($entity, $method)) {
-                    throw new \Exception( "$class::$method not found!" );
+            $route = $config->get()
+                ->route
+                ->{$this->action}
+                ->{$this->entity};
+
+            $class = $config->get()->namespace . '\\' . $route->class;
+            $method = (string) isset( $route->method ) ? $route->method : $this->action;
+
+            try {
+                if (class_exists($class)) {
+                    $entity = new $class();
+
+                    if (!method_exists($entity, $method)) {
+                        throw new \RuntimeException( sprintf(
+                            self::EXCEPTION_ENTITY_METHOD_NOT_FOUND,
+                            $entity,
+                            $method
+                        ) );
+                    }
+                    $entity->$method();
                 }
-                $entity->$method();
+            } catch ( \Exception $e ) {
+                echo $e->getMessage();
             }
-        } catch ( \Exception $e ) {
-            echo $e->getMessage();
+        } catch ( \ErrorException $e ) {
+            throw new \RuntimeException( 'Configuration not properly set.' );
         }
     }
 

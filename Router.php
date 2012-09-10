@@ -7,6 +7,8 @@ namespace Steel;
  */
 class Router implements Interfaces\Router
 {
+    use Injectors\Config;
+
     /**
      * Routes
      *
@@ -17,11 +19,25 @@ class Router implements Interfaces\Router
     public function __construct($routes)
     {
         $this->routes = $routes;
+
+        var_dump($routes);
+
+        $config = $this->getConfig();
+
+        foreach ( $config->route as $route )
+        {
+            $this->parseRoute($route);
+        }
+    }
+
+    protected function parseRoute( $route )
+    {
+
     }
 
     /**
      * @param Interfaces\Request $request
-     * @return Route
+     * @return Interfaces\Route
      */
     public function getRoute(Interfaces\Request $request)
     {
