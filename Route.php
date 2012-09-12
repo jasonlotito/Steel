@@ -37,8 +37,6 @@ class Route implements IRoute
             $this->entity = $entity;
             $this->action = $action;
         }
-
-        var_dump($this);
     }
 
     /**
@@ -46,6 +44,7 @@ class Route implements IRoute
      */
     public function follow()
     {
+        $routeData = [ ];
         try {
             $config = $this->getConfig();
             $namespace = $config->get()->namespace;
@@ -54,6 +53,18 @@ class Route implements IRoute
                 ->route
                 ->{$this->action}
                 ->{$this->entity};
+
+            $routes = $config->get()->routes;
+
+//            var_dump($config->get());
+            $routes = $config->get()->route;
+//            var_dump($all);
+
+//            var_dump($routes['route']);
+            foreach( $routes as $key =>  $route )
+            {
+                $this->parseRouteDetails($route, $routeData);
+            }
 
             $class = $config->get()->namespace . '\\' . $route->class;
             $method = (string) isset( $route->method ) ? $route->method : $this->action;
@@ -74,9 +85,16 @@ class Route implements IRoute
             } catch ( \Exception $e ) {
                 echo $e->getMessage();
             }
-        } catch ( \ErrorException $e ) {
-            throw new \RuntimeException( 'Configuration not properly set.' );
+        } catch ( \InvalidArgumentException $e ) {
+            throw new \RuntimeException( $e->getMessage() );
         }
+    }
+
+    protected function parseRouteDetails( $route, &$routeData )
+    {
+        var_dump('route', $route);
+
+        $routeData[(string)$route->path] = $route;
     }
 
     /**

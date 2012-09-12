@@ -39,7 +39,7 @@ class Cache implements ICache, CacheAdapter
      * @param null $ttl
      * @return bool|void
      */
-    public function set($name, $value, $ttl = null)
+    public function set($name, $value, $ttl = 60)
     {
         $this->adapter->set($name, $value, $ttl);
     }
@@ -51,7 +51,7 @@ class Cache implements ICache, CacheAdapter
      */
     public function get($name, &$success = null)
     {
-        $this->adapter->get($name);
+        return $this->adapter->get($name);
     }
 
     /**

@@ -24,36 +24,36 @@ class APC implements CacheAdapter
      */
     public function get($name, &$success = null)
     {
-        apc_fetch($name, $success);
+        return apc_fetch($name, $success);
     }
 
     /**
      * @param string $name
      * @param int $step
-     * @return int
+     * @return int|bool
      */
     public function increment($name, $step = 1, &$success = null)
     {
-        apc_inc($name, $step, $success);
+        return apc_inc($name, $step, $success);
     }
 
     /**
      * @param string $name
      * @param int $step
      * @param bool &$success
-     * @return mixed
+     * @return int|bool
      */
     public function decrement($name, $step = 1, &$success = null)
     {
-        apc_dec($name, $step, $success);
+        return apc_dec($name, $step, $success);
     }
 
     /**
      * @param string $name
-     * @return mixed
+     * @return bool|string[] Returns TRUE on success or FALSE on failure. For array of keys returns list of failed keys.
      */
     public function delete($name)
     {
-        apc_delete($name);
+        return apc_delete($name);
     }
 }
