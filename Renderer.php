@@ -2,12 +2,14 @@
 
 namespace Steel;
 
+use Steel\Interfaces\Renderer as IRenderer;
+
 class Renderer
 {
     /**
      * Return a renderer based on type
      *
-     * @return Steel\Interfaces\Renderer
+     * @return IRenderer
      */
     public static function fromEngineType($renderingEngineType)
     {

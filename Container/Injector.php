@@ -14,7 +14,6 @@ use Steel\Container;
  */
 trait Injector
 {
-
     /**
      * @param string $containerName
      * @return Container
