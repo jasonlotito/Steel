@@ -44,49 +44,21 @@ class Route implements IRoute
      */
     public function follow()
     {
-        $routeData = [ ];
-        try {
-            $config = $this->getConfig();
-            $namespace = $config->get()->namespace;
+        $class = $this->entity;
+        $method = $this->action;
 
-            $route = $config->get()
-                ->route
-                ->{$this->action}
-                ->{$this->entity};
 
-            $routes = $config->get()->routes;
+        if (class_exists($class)) {
+            $entity = new $class();
 
-//            var_dump($config->get());
-            $routes = $config->get()->route;
-//            var_dump($all);
-
-//            var_dump($routes['route']);
-            foreach( $routes as $key =>  $route )
-            {
-                $this->parseRouteDetails($route, $routeData);
+            if (!method_exists($entity, $method)) {
+                throw new \RuntimeException( sprintf(
+                    self::EXCEPTION_ENTITY_METHOD_NOT_FOUND,
+                    $entity,
+                    $method
+                ) );
             }
-
-            $class = $config->get()->namespace . '\\' . $route->class;
-            $method = (string) isset( $route->method ) ? $route->method : $this->action;
-
-            try {
-                if (class_exists($class)) {
-                    $entity = new $class();
-
-                    if (!method_exists($entity, $method)) {
-                        throw new \RuntimeException( sprintf(
-                            self::EXCEPTION_ENTITY_METHOD_NOT_FOUND,
-                            $entity,
-                            $method
-                        ) );
-                    }
-                    $entity->$method();
-                }
-            } catch ( \Exception $e ) {
-                echo $e->getMessage();
-            }
-        } catch ( \InvalidArgumentException $e ) {
-            throw new \RuntimeException( $e->getMessage() );
+            $entity->$method();
         }
     }
 

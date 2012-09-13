@@ -23,35 +23,28 @@ class Router implements Interfaces\Router
 
     public function __construct($routes)
     {
-//        $this->routes = $routes;
-
+        // @todo Store as object var
         $config = $this->getConfig();
 
-        if ( isset($config) )
-        {
+        if (isset( $config )) {
             $this->appendPath = $config->routerDefaults->pathAppend;
-//            var_dump($config->routerDefaults->pathAppend);
         }
 
-        foreach ( $config->route as $route )
-        {
+        foreach ($config->route as $route) {
             $this->parseRoute($route);
         }
 
         $this->entities = array_keys($this->routes);
     }
 
-    protected function parseRoute( $route, $path = '' )
+    protected function parseRoute($route, $path = '')
     {
         $fullPath = $path . $route->path;
         $this->routes[$fullPath] = $route;
 
-
-        if ( isset($route->route) )
-        {
-            foreach ( $route->route as $subRoute )
-            {
-                $this->parseRoute( $subRoute, $fullPath );
+        if (isset( $route->route )) {
+            foreach ($route->route as $subRoute) {
+                $this->parseRoute($subRoute, $fullPath);
             }
         }
     }
@@ -65,24 +58,81 @@ class Router implements Interfaces\Router
         $action = $request->getAction();
         $entity = $request->getEntity();
 
-        echo '<ol>';
-        foreach ( $this->entities as $entityTest )
-        {
-            echo '<li>' . "$entityTest : " . $this->getCache()->get($entityTest);
+        $actionEntity = $action . ':' . $entity;
+        $handler = $this->getCache()->get($actionEntity);
+
+        if (!$handler) {
+            foreach ($this->entities as $entityKey) {
+                $entityTest = "|^$entityKey{$this->appendPath}$|i";
+                $match = preg_match($entityTest, $entity, $matches);
+
+                if ($match) {
+                    $entityUsed = $this->routes[$entityKey];
+
+                    $handler = $this->buildHandler($entityUsed, $entity, $action);
+
+                    $this->getCache()->set($actionEntity, $handler, 10);
+                }
+            }
         }
-        echo '</ol>';
 
-        foreach ($this->entities as $entityTest) {
-            $entityTest = "|^$entityTest{$this->appendPath}$|";
-            $match = preg_match($entityTest, $entity);
+        return new Route( $handler['class'], $handler['function'] );
+    }
 
-            $cache = "<pre>$match, $entityTest, $entity</pre>";
+    protected function buildHandler($entityUsed, $entity, $action)
+    {
+        $handler = [
+            'class' => $this->buildHandlerClass($entityUsed, $entity),
+            'function' => $this->buildHandlerFunction($entityUsed, $action)
+        ];
+        return $handler;
+    }
 
-            var_dump($this->getCache()->set($entity, $cache));
+    protected function buildHandlerFunction($entityUsed, $action)
+    {
+        return isset( $entityUsed->method ) && isset( $entityUsed->method->function ) ?
+            (string) $entityUsed->method->function : $this->generatMagicMethodName($action);
+    }
+
+    protected function buildHandlerClass($entityUsed, $entity)
+    {
+        return $this->getConfig()->routerDefaults->namespace .
+            ( isset( $entityUsed->method ) && isset( $entityUsed->method->class ) ?
+                (string) $entityUsed->method->class : $this->generateMagicEntityClassName($entity) );
+    }
+
+    protected function generatMagicMethodName($action)
+    {
+        if (
+            // We shouldn't be using getConfig() each time
+            isset( $this->getConfig()->routerDefaults ) &&
+            isset( $this->getConfig()->routerDefaults->methodFunctions ) &&
+            isset( $this->getConfig()->routerDefaults->methodFunctions->{$action} )
+        ) {
+
+            return (string) $this->getConfig()->routerDefaults->methodFunctions->{$action};
         }
 
-        die;
+        return strtolower($action);
+    }
 
-//        return new Route( $entity, $action );
+    protected function generateMagicEntityClassName($entity)
+    {
+        // Not crazy about this setup
+        return
+            str_replace( // Replace spaces with \\ for namespaces and class
+                ' ',
+                '\\',
+                ucwords( // Capitalize Each word
+                    str_replace(
+                        '/',
+                        ' ', //Replace / with _
+                        trim( // Trim off /
+                            $entity,
+                            '/'
+                        )
+                    )
+                )
+            );
     }
 }
