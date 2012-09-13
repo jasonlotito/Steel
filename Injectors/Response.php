@@ -7,6 +7,9 @@ use \Steel\Response as SteelResponse;
 
 trait Response
 {
+    /**
+     * @return \Steel\Response
+     */
     protected function getResponse()
     {
         if (Container::isStored('Response')) {

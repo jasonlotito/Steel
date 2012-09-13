@@ -59,33 +59,65 @@ class Router implements Interfaces\Router
         $entity = $request->getEntity();
 
         $actionEntity = $action . ':' . $entity;
+
+        // @todo This cache pattern will be used often, is there a better way?
         $handler = $this->getCache()->get($actionEntity);
 
         if (!$handler) {
-            foreach ($this->entities as $entityKey) {
-                $entityTest = "|^$entityKey{$this->appendPath}$|i";
-                $match = preg_match($entityTest, $entity, $matches);
-
-                if ($match) {
-                    $entityUsed = $this->routes[$entityKey];
-
-                    $handler = $this->buildHandler($entityUsed, $entity, $action);
-
-                    $this->getCache()->set($actionEntity, $handler, 10);
-                }
-            }
+            $handler = $this->findHandler($entity, $action, $actionEntity);
         }
 
         return new Route( $handler['class'], $handler['function'] );
     }
 
+    public function findHandler($entity, $action, $actionEntity)
+    {
+        $handler = null;
+
+        foreach ($this->entities as $entityKey) {
+            if ($this->checkIfEntityMatches($entityKey, $entity)) {
+                $handler = $this->storeHandlerMatch($this->routes[$entityKey], $entity, $action, $actionEntity);
+                break;
+            }
+        }
+
+        if (!isset( $handler )) {
+            $handler = $this->generateHandlerStructure(
+                $this->buildHandlerClass('Error'),
+                'notFound'
+            );
+        }
+
+        return $handler;
+    }
+
+    protected function checkIfEntityMatches($entityKey, $entity)
+    {
+        $entityTest = "|^$entityKey{$this->appendPath}$|i";
+        $match = preg_match($entityTest, $entity, $matches);
+        return $match;
+    }
+
+    protected function storeHandlerMatch($entityUsed, $entity, $action, $actionEntity)
+    {
+        $handler = $this->buildHandler($entityUsed, $entity, $action);
+        $this->getCache()->set($actionEntity, $handler, 10);
+        return $handler;
+    }
+
     protected function buildHandler($entityUsed, $entity, $action)
     {
-        $handler = [
-            'class' => $this->buildHandlerClass($entityUsed, $entity),
-            'function' => $this->buildHandlerFunction($entityUsed, $action)
+        $class = $this->buildHandlerClass($entity,$entityUsed);
+        $function = $this->buildHandlerFunction($entityUsed, $action);
+        return $this->generateHandlerStructure($class, $function);
+    }
+
+    protected function generateHandlerStructure($class, $function)
+    {
+        return [
+            'class' => $class,
+            'function' => $function
         ];
-        return $handler;
     }
 
     protected function buildHandlerFunction($entityUsed, $action)
@@ -94,10 +126,10 @@ class Router implements Interfaces\Router
             (string) $entityUsed->method->function : $this->generatMagicMethodName($action);
     }
 
-    protected function buildHandlerClass($entityUsed, $entity)
+    protected function buildHandlerClass($entity, $entityUsed = null )
     {
         return $this->getConfig()->routerDefaults->namespace .
-            ( isset( $entityUsed->method ) && isset( $entityUsed->method->class ) ?
+            ( isset( $entityUsed ) && isset( $entityUsed->method ) && isset( $entityUsed->method->class ) ?
                 (string) $entityUsed->method->class : $this->generateMagicEntityClassName($entity) );
     }
 
