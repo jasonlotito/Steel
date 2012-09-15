@@ -16,4 +16,8 @@ class Response
         $this->addHeader(self::HEADER_404);
     }
 
+    public function flush( )
+    {
+        flush();
+    }
 }

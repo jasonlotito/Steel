@@ -38,7 +38,7 @@ class Event
     {
         $return = true;
 
-        if (!isset(self::$observers[$event])) {
+        if (!isset( self::$observers[$event] )) {
             return $return;
         }
 

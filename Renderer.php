@@ -13,7 +13,7 @@ class Renderer
      */
     public static function fromEngineType($renderingEngineType)
     {
-        $renderClassName = 'Steel\\Renderers\\' . $renderingEngineType;
+        $renderClassName = 'Steel\\Renderers\\' . (string) $renderingEngineType;
         if (class_exists($renderClassName)) {
             return new $renderClassName();
         }

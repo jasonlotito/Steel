@@ -13,31 +13,29 @@ class XML extends \DOMDocument
         $this->appendChild($this->root);
     }
 
-    public function setData($name, $value, $parentNode = null)
+    public function setData($name, $value)
+    {
+        $this->setDataWithParent($name, $value);
+    }
+
+    public function setDataWithParent($name, $value, $parentNode = null)
     {
         if (is_array($value)) {
-            $newNode = $this->createElement($name);
-            $singularName = null;
-
-            if (isset( $value[0] )) {
-                $singularName = $this->inflector($name);
+            foreach ($value as $val) {
+                $this->setDataWithParent(
+                    $name,
+                    $val
+                );
             }
-
-            foreach ($value as $key => $val) {
-                $this->setData(isset( $singularName ) ? $singularName : $key, $val, $newNode);
-            }
-
-            $this->root->appendChild($newNode);
-            return;
-        }
-
-        $ele = $this->createElement($name);
-        $ele->appendChild($this->createCDATASection($value));
-
-        if (isset( $parentNode )) {
-            $parentNode->appendChild($ele);
         } else {
-            $this->root->appendChild($ele);
+            $ele = $this->createElement($name);
+            $ele->appendChild($this->createCDATASection($value));
+
+            if (isset( $parentNode )) {
+                $parentNode->appendChild($ele);
+            } else {
+                $this->root->appendChild($ele);
+            }
         }
     }
 

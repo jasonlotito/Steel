@@ -52,9 +52,16 @@ class View
         $this->data->setData($name, $value);
     }
 
+    public function render()
+    {
+        echo $this->renderer->render($this->data, $this->template);
+    }
+
     public function output()
     {
-        $data = $this->renderer->render($this->data, $this->template);
+        echo $this->renderer->render($this->data, $this->template);
+        return;
+//        echo htmlspecialchars($data);
         $container = $this->getData('BaseTemplate', $this->renderer->getDataType());
         $container->setData('content', $data);
 
