@@ -2,69 +2,103 @@
 
 namespace Steel;
 
-class View
+/**
+
+ */class View
 {
-    use
-    Injectors\View\Template,
-    Injectors\View\Data,
-    Injectors\Config,
-    Injectors\Renderer;
+    use Injectors\View\Template;
+    use Injectors\View\Data;
+    use Injectors\Config;
+    use Injectors\Renderer;
 
-    const DEFAULT_NAME = 'View\\';
+    /**
+     * @var Interfaces\Renderer
+     */
+    protected $renderer;
 
-    protected $view;
-
+    /**
+     * @var mixed
+     */
     protected $template;
 
+    /**
+     * @var mixed
+     */
     protected $data;
 
+    /**
+     * @var string
+     */
     protected $name;
 
+    /**
+     * @var Interfaces\Config
+     */
     protected $config;
 
+    /**
+     * @param $name
+     */
     protected function __construct($name)
     {
-        $this->config = $this->getConfig();
-        $this->name = stripslashes($name);
-        $this->template = str_replace('\\', '/', $name);
-        $this->renderer = $this->getRenderer($this->config->get()->renderer);
+        $this->config = $this->getConfig()->get();
+        $this->name = stripslashes(basename($name));
+        $this->setTemplate($name);
+        $this->renderer = $this->getRenderer($this->config->renderer);
         $this->data = $this->getData($this->name, $this->renderer->getDataType());
-        $this->baseTemplate = $this->config->get()->baseTemplate;
+        $this->baseTemplate = $this->config->baseTemplate;
     }
 
+    /**
+     * Set the template name we will be using
+     *
+     * @param string $name
+     * @return void
+     */
+    public function setTemplate($name)
+    {
+        $this->template = str_replace('\\', '/', $name);
+    }
+
+    /**
+     * @param $name
+     * @return View
+     */
     public static function create($name)
     {
         return new self( $name );
     }
 
+    /**
+     * @param Interfaces\Renderer $renderer
+     */
     public function setRenderer(Interfaces\Renderer $renderer)
     {
         $this->renderer = $renderer;
     }
 
-    public function setTemplate($template)
-    {
-        $this->template = $this->getTemplate($this->name);
-    }
-
+    /**
+     * @param $name
+     * @param $value
+     */
     public function attach($name, $value)
     {
         $this->data->setData($name, $value);
     }
 
+    /**
+
+     */
     public function render()
     {
-        echo $this->renderer->render($this->data, $this->template);
+        return $this->renderer->render($this->data, $this->template);
     }
 
+    /**
+
+     */
     public function output()
     {
-        echo $this->renderer->render($this->data, $this->template);
-        return;
-//        echo htmlspecialchars($data);
-        $container = $this->getData('BaseTemplate', $this->renderer->getDataType());
-        $container->setData('content', $data);
-
-        echo $this->renderer->render($container, $this->baseTemplate);
+        echo $this->render();
     }
 }

@@ -3,11 +3,13 @@
 namespace Steel\Renderers;
 
 use Steel\Interfaces\Renderer;
+use Steel\Injectors\Config;
+use \XSLTProcessor;
+use \DOMDocument;
 
 class XSLT implements Renderer
 {
-    use
-    \Steel\Injectors\Config;
+    use Config;
 
     public function getDataType()
     {
@@ -24,14 +26,11 @@ class XSLT implements Renderer
      * @param $template
      * @return string
      */
-    public function render( $data, $template)
+    public function render($data, $template)
     {
-        $xslt = new \XSLTProcessor();
-        $xslDoc = new \DOMDocument();
-//        var_dump($template);
-//        if ( $template == 'Base' )
-//            echo debug_backtrace();
-        $xslDoc->load($this->getConfig()->get()->directories->templates . $template . '.xsl');
+        $xslt = new XSLTProcessor();
+        $xslDoc = new DOMDocument();
+        $xslDoc->load($this->getConfig()->get()->templatesDir . $template . '.xsl');
         $xslt->importStylesheet($xslDoc);
 //        echo htmlspecialchars($data->saveXML());
         return $xslt->transformToXml($data);

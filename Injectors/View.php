@@ -7,6 +7,10 @@ use \Steel\View as SteelView;
 
 trait View
 {
+    /**
+     * @param string $viewName
+     * @return SteelView
+     */
     public function getView($viewName = 'View')
     {
         if (Container::isStored($viewName)) {

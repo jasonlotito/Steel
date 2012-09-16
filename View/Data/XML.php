@@ -2,10 +2,26 @@
 
 namespace Steel\View\Data;
 
-class XML extends \DOMDocument
+use \Steel\Interfaces\Data;
+use \Steel\Helpers\String\Injector as StringInjector;
+
+/**
+
+ */
+class XML extends \DOMDocument implements Data
 {
+    use StringInjector;
+
+    /**
+     * @var \DOMElement
+     */
     protected $root;
 
+    /**
+     * Constructor
+     *
+     * @param string $rootName
+     */
     public function __construct($rootName)
     {
         parent::__construct('1.0', 'UTF-8');
@@ -13,57 +29,57 @@ class XML extends \DOMDocument
         $this->appendChild($this->root);
     }
 
+    /**
+     * @param string $name
+     * @param array|string $value
+     * @return void
+     */
     public function setData($name, $value)
     {
         $this->setDataWithParent($name, $value);
     }
 
+    /**
+     * @param $name
+     * @param $value
+     * @param \DOMElement|null $parentNode
+     * @return void
+     */
     public function setDataWithParent($name, $value, $parentNode = null)
     {
         if (is_array($value)) {
-            foreach ($value as $val) {
-                $this->setDataWithParent(
-                    $name,
-                    $val
-                );
+
+            $createdElement = $this->createElement($name);
+
+            foreach ($value as $key => $val) {
+                $inflectedName = is_numeric($key) ? $name : $key;
+                $this->setDataWithParent($inflectedName, $val, $createdElement);
             }
-        } else {
-            $ele = $this->createElement($name);
-            $ele->appendChild($this->createCDATASection($value));
 
             if (isset( $parentNode )) {
-                $parentNode->appendChild($ele);
+                $parentNode->appendChild($createdElement);
             } else {
-                $this->root->appendChild($ele);
+                $this->root->appendChild($createdElement);
+            }
+        } else {
+
+            $createdElement = $this->createElement($this->inflect($name));
+            $createdElement->appendChild($this->createCDATASection($value));
+
+            if (isset( $parentNode )) {
+                $parentNode->appendChild($createdElement);
+            } else {
+                $this->root->appendChild($createdElement);
             }
         }
     }
 
-    private function inflector($word)
+    /**
+     * @param $word
+     * @return string
+     */
+    private function inflect($word)
     {
-        $rules = array(
-            'ss' => false,
-            'os' => 'o',
-            'ies' => 'y',
-            'xes' => 'x',
-            'oes' => 'o',
-            'ies' => 'y',
-            'ves' => 'f',
-            's' => ''
-        );
-
-        foreach (array_keys($rules) as $key) {
-            if (substr($word, ( strlen($key) * -1 )) != $key) {
-                continue;
-            }
-
-            if ($key === false) {
-                return $word;
-            }
-
-            return substr($word, 0, strlen($word) - strlen($key)) . $rules[$key];
-        }
-
-        return $word;
+        return $this->getStringHelper()->getInflection($word);
     }
 }
