@@ -50,6 +50,12 @@ namespace Steel;
         $this->view = $this->getView($this->templateName);
     }
 
+    protected function setTemplate( $name )
+    {
+        $this->view->setTemplate( $name );
+    }
+
+
     /**
      * @param $view
      * @return void

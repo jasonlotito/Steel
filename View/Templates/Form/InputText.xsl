@@ -8,13 +8,33 @@
     <xsl:param name="label"/>
     <xsl:param name="value"/>
     <xsl:param name="name"/>
+    <xsl:param name="class"/>
     <xsl:param name="id"/>
     <xsl:param name="placeholder"/>
+    <xsl:param name="for"/>
 
-    <label>
+    <xsl:choose>
+      <xsl:when test="$id = ''">
+        <xsl:variable name="setId">
+          <xsl:text>form-</xsl:text>
+          <xsl:value-of select="$name"/>
+        </xsl:variable>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:variable name="setId" select="$id" />
+      </xsl:otherwise>
+    </xsl:choose>
+
+    <label class="control-label">
+      <xsl:if test="$for != ''">
+        <xsl:attribute name="for">
+          <xsl:value-of select="$for"/>
+        </xsl:attribute>
+      </xsl:if>
       <xsl:value-of select="$label"/>
     </label>
 
+    <div class="controls">
     <input type="text">
 
       <xsl:attribute name="value">
@@ -30,19 +50,42 @@
       </xsl:attribute>
 
       <xsl:attribute name="id">
-        <xsl:choose>
-          <xsl:when test="$id = ''">
-            <xsl:text>form-</xsl:text>
-            <xsl:value-of select="$name"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:value-of select="$id"/>
-          </xsl:otherwise>
-        </xsl:choose>
+        <xsl:value-of select="setId" />
+      </xsl:attribute>
+
+      <xsl:attribute name="class">
+        <xsl:text>error</xsl:text>
+        <xsl:value-of select="$class" />
       </xsl:attribute>
 
     </input>
 
+
+    <xsl:if test="error = 1">
+      <span class="help-inline">
+        <strong>
+          <xsl:choose>
+            <xsl:when test="errorLabel != ''">
+              <xsl:value-of select="errorLabel"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:text>Error:</xsl:text>
+            </xsl:otherwise>
+          </xsl:choose>
+        </strong>
+        <xsl:choose>
+          <xsl:when test="errorMessage != ''">
+            <xsl:value-of select="errorMessage"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <span class="error-message">
+              <xsl:text>This element is required.</xsl:text>
+            </span>
+          </xsl:otherwise>
+        </xsl:choose>
+      </span>
+    </xsl:if>
+    </div>
   </xsl:template>
 
 </xsl:stylesheet>

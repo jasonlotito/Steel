@@ -34,6 +34,11 @@ class Form
     protected $elements;
 
     /**
+     * @var array
+     */
+    protected $options;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -46,31 +51,48 @@ class Form
      * @param $label
      * @param null $name
      * @param string $value
+     * @return self
      */
     public function addInput($label, $name = null, $value = '')
     {
+        $this->addElement($label, $name, $value, 'InputText');
+    }
+
+    protected function addElement($label, $name, $value, $element)
+    { // @todo Move this into Element Classes
         $placeholder = '';
 
         if (is_array($label)) {
             $options = $label;
-            unset($label);
-            $label = $this->getOption('label', $options);
+            unset( $label );
             $name = $this->getOption('name', $options);
-            $value = $this->getOption('value', $options);
-            $placeholder = $this->getOption('placeholder', $options);
+        } else {
+            $options = [
+                'label' => $label,
+                'name' => $name,
+                'value' => $value,
+            ];
         }
 
         $this->elementCount++;
-        $this->elements[] = [
-            'label' => $label,
+
+        $elements = [
             'name' => isset( $name ) ? $name : 'input' . $this->elementCount,
-            'value' => $value,
-            'type' => 'InputText',
-            'placeholder' => $placeholder,
+            'type' => $element,
         ];
+
+        $elements = array_merge($options, $elements);
+//        var_dump($elements);
+
+        $this->elements[] = $elements;
     }
 
-    protected function getOption( $name, $options, $default = '' )
+    public function addTextArea($label, $name = null, $value = '')
+    {
+        $this->addElement($label, $name, $value, 'TextArea');
+    }
+
+    protected function getOption($name, $options, $default = '')
     {
         return isset( $options[$name] ) ?
             $options[$name] : $default;
@@ -83,7 +105,7 @@ class Form
     }
 
     /**
-     *
+
      */
     public function output()
     {
