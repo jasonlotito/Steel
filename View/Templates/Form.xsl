@@ -5,10 +5,15 @@
 
   <xsl:include href="Form/InputText.xsl"/>
   <xsl:include href="Form/TextArea.xsl"/>
+  <xsl:include href="Form/Select.xsl"/>
 
   <xsl:template match="/Form">
     <form class="form-horizontal">
-
+      <input type="hidden" name="token">
+        <xsl:attribute name="value">
+          <xsl:value-of select="token"/>
+        </xsl:attribute>
+      </input>
       <xsl:for-each select="elements/elements">
         <div class="control-group">
           <xsl:if test="error = '1'">
@@ -32,6 +37,9 @@
           <xsl:variable name="class">
             <xsl:value-of select="class"/>
           </xsl:variable>
+          <xsl:variable name="selected">
+            <xsl:value-of select="selected"/>
+          </xsl:variable>
 
           <xsl:choose>
 
@@ -52,6 +60,17 @@
                 <xsl:with-param name="name" select="$name"/>
                 <xsl:with-param name="class" select="$class"/>
                 <xsl:with-param name="placeholder" select="$placeholder"/>
+              </xsl:call-template>
+            </xsl:when>
+
+            <xsl:when test="type = 'Select'">
+              <xsl:call-template name="Select">
+                <xsl:with-param name="value" select="$value"/>
+                <xsl:with-param name="label" select="$label"/>
+                <xsl:with-param name="name" select="$name"/>
+                <xsl:with-param name="class" select="$class"/>
+                <xsl:with-param name="placeholder" select="$placeholder"/>
+                <xsl:with-param name="selected" select="$selected"/>
               </xsl:call-template>
             </xsl:when>
 

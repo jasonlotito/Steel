@@ -58,7 +58,7 @@ class Form
         $this->addElement($label, $name, $value, 'InputText');
     }
 
-    protected function addElement($label, $name, $value, $element)
+    protected function addElement($label, $name = null, $value = '', $element = '')
     { // @todo Move this into Element Classes
         $placeholder = '';
 
@@ -82,7 +82,6 @@ class Form
         ];
 
         $elements = array_merge($options, $elements);
-//        var_dump($elements);
 
         $this->elements[] = $elements;
     }
@@ -90,6 +89,28 @@ class Form
     public function addTextArea($label, $name = null, $value = '')
     {
         $this->addElement($label, $name, $value, 'TextArea');
+    }
+
+    public function addSelect($label, $name, array $values, $selected = '', array $params = array())
+    {
+        foreach ($values as $key => $val) {
+            $options[] = [
+                'value' => $key,
+                'label' => $val,
+            ];
+        }
+
+        $options = [
+            'label' => $label,
+            'name' => $name,
+            'value' => $options,
+            'element' => 'Select',
+            'selected' => $selected
+        ];
+
+        $options = array_merge($params, $options);
+
+        $this->addElement($options, $name, $values, 'Select');
     }
 
     protected function getOption($name, $options, $default = '')
@@ -100,6 +121,8 @@ class Form
 
     public function render()
     {
+        // @todo Better token creation along with session storage of token (not md5)
+        $this->view->attach('token', md5(microtime()));
         $this->view->attach('elements', $this->elements);
         return $this->view->render();
     }

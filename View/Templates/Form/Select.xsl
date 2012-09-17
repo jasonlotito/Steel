@@ -3,7 +3,7 @@
   <xsl:output method="xml" version="5.0" encoding="utf-8" indent="yes"
               standalone="yes" omit-xml-declaration="yes"/>
 
-  <xsl:template name="InputText">
+  <xsl:template name="Select">
 
     <xsl:param name="label"/>
     <xsl:param name="value"/>
@@ -12,6 +12,8 @@
     <xsl:param name="id"/>
     <xsl:param name="placeholder"/>
     <xsl:param name="for"/>
+    <xsl:param name="selected"/>
+
 
     <xsl:choose>
       <xsl:when test="$id = ''">
@@ -35,11 +37,8 @@
     </label>
 
     <div class="controls">
-      <input type="text">
 
-        <xsl:attribute name="value">
-          <xsl:value-of select="$value"/>
-        </xsl:attribute>
+      <select>
 
         <xsl:attribute name="name">
           <xsl:value-of select="$name"/>
@@ -58,7 +57,21 @@
           <xsl:value-of select="$class"/>
         </xsl:attribute>
 
-      </input>
+        <xsl:for-each select="value/value">
+          <option>
+            <xsl:if test="$selected = value">
+              <xsl:attribute name="selected">
+                <xsl:text>selected</xsl:text>
+              </xsl:attribute>
+            </xsl:if>
+            <xsl:attribute name="value">
+              <xsl:value-of select="value"/>
+            </xsl:attribute>
+            <xsl:value-of select="label"/>
+          </option>
+        </xsl:for-each>
+
+      </select>
 
       <xsl:choose>
         <xsl:when test="error = 1">
