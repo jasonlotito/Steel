@@ -4,8 +4,10 @@
               standalone="yes" omit-xml-declaration="yes"/>
 
   <xsl:include href="Form/InputText.xsl"/>
+  <xsl:include href="Form/Password.xsl"/>
   <xsl:include href="Form/TextArea.xsl"/>
   <xsl:include href="Form/Select.xsl"/>
+  <xsl:include href="Form/Button.xsl"/>
 
   <xsl:template match="/Form">
     <form class="form-horizontal">
@@ -45,6 +47,26 @@
 
             <xsl:when test="type = 'InputText'">
               <xsl:call-template name="InputText">
+                <xsl:with-param name="value" select="$value"/>
+                <xsl:with-param name="label" select="$label"/>
+                <xsl:with-param name="name" select="$name"/>
+                <xsl:with-param name="class" select="$class"/>
+                <xsl:with-param name="placeholder" select="$placeholder"/>
+              </xsl:call-template>
+            </xsl:when>
+
+            <xsl:when test="type = 'Password'">
+              <xsl:call-template name="Password">
+                <xsl:with-param name="value" select="$value"/>
+                <xsl:with-param name="label" select="$label"/>
+                <xsl:with-param name="name" select="$name"/>
+                <xsl:with-param name="class" select="$class"/>
+                <xsl:with-param name="placeholder" select="$placeholder"/>
+              </xsl:call-template>
+            </xsl:when>
+
+            <xsl:when test="type = 'Button'">
+              <xsl:call-template name="Button">
                 <xsl:with-param name="value" select="$value"/>
                 <xsl:with-param name="label" select="$label"/>
                 <xsl:with-param name="name" select="$name"/>

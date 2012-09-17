@@ -58,6 +58,16 @@ class Form
         $this->addElement($label, $name, $value, 'InputText');
     }
 
+    public function addPassword($label, $name = null, $value = '')
+    {
+        $this->addElement($label, $name, $value, 'Password');
+    }
+
+    public function addButton($label, $name = null, $value = '')
+    {
+        $this->addElement($label, $name, $value, 'Button');
+    }
+
     protected function addElement($label, $name = null, $value = '', $element = '')
     { // @todo Move this into Element Classes
         $placeholder = '';
@@ -82,7 +92,6 @@ class Form
         ];
 
         $elements = array_merge($options, $elements);
-
         $this->elements[] = $elements;
     }
 

@@ -29,7 +29,7 @@ class String
                 continue;
             }
 
-            if ($key === false) {
+            if ($this->rules[$key] === false) {
                 return $word;
             }
 

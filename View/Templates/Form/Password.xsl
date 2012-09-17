@@ -3,7 +3,7 @@
   <xsl:output method="xml" version="5.0" encoding="utf-8" indent="yes"
               standalone="yes" omit-xml-declaration="yes"/>
 
-  <xsl:template name="InputText">
+  <xsl:template name="Password">
     <!-- @todo Combine all inputs into a single template -->
     <xsl:param name="label"/>
     <xsl:param name="value"/>
@@ -35,7 +35,7 @@
     </label>
 
     <div class="controls">
-      <input type="text">
+      <input type="password">
 
         <xsl:attribute name="value">
           <xsl:value-of select="$value"/>
@@ -54,7 +54,6 @@
         </xsl:attribute>
 
         <xsl:attribute name="class">
-          <xsl:text>error</xsl:text>
           <xsl:value-of select="$class"/>
         </xsl:attribute>
 
