@@ -5,9 +5,7 @@ namespace Steel;
 /**
  * Controller
  */
-/**
-
- */abstract class Controller
+abstract class Controller
 {
     use Injectors\View;
     use Injectors\Request;
