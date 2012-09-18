@@ -26,23 +26,8 @@
     </xsl:choose>
 
     <div class="form-actions">
-      <button>
 
-        <xsl:attribute name="value">
-          <xsl:value-of select="$value"/>
-        </xsl:attribute>
-
-        <xsl:attribute name="name">
-          <xsl:value-of select="$name"/>
-        </xsl:attribute>
-
-        <xsl:attribute name="placeholder">
-          <xsl:value-of select="$placeholder"/>
-        </xsl:attribute>
-
-        <xsl:attribute name="id">
-          <xsl:value-of select="setId"/>
-        </xsl:attribute>
+      <xsl:element name="button" use-attribute-sets="input-attributes">
 
         <xsl:attribute name="class">
           <xsl:text>btn</xsl:text>
@@ -54,7 +39,7 @@
 
         <xsl:value-of select="$label"/>
 
-      </button>
+      </xsl:element>
 
       <xsl:choose>
         <xsl:when test="error = 1">

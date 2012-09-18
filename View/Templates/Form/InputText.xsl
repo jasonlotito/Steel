@@ -3,6 +3,8 @@
   <xsl:output method="xml" version="5.0" encoding="utf-8" indent="yes"
               standalone="yes" omit-xml-declaration="yes"/>
 
+  <xsl:include href="Element.xsl"/>
+
   <xsl:template name="InputText">
     <!-- @todo Combine all inputs into a single template -->
     <xsl:param name="label"/>
@@ -26,39 +28,27 @@
     </xsl:choose>
 
     <label class="control-label">
+
       <xsl:if test="$for != ''">
         <xsl:attribute name="for">
           <xsl:value-of select="$for"/>
         </xsl:attribute>
       </xsl:if>
+
       <xsl:value-of select="$label"/>
+
     </label>
 
     <div class="controls">
-      <input type="text">
 
-        <xsl:attribute name="value">
-          <xsl:value-of select="$value"/>
+      <xsl:element name="input" use-attribute-sets="input-attributes">
+
+        <xsl:attribute name="type">
+          <xsl:text>text</xsl:text>
         </xsl:attribute>
 
-        <xsl:attribute name="name">
-          <xsl:value-of select="$name"/>
-        </xsl:attribute>
+      </xsl:element>
 
-        <xsl:attribute name="placeholder">
-          <xsl:value-of select="$placeholder"/>
-        </xsl:attribute>
-
-        <xsl:attribute name="id">
-          <xsl:value-of select="setId"/>
-        </xsl:attribute>
-
-        <xsl:attribute name="class">
-          <xsl:text>error</xsl:text>
-          <xsl:value-of select="$class"/>
-        </xsl:attribute>
-
-      </input>
 
       <xsl:choose>
         <xsl:when test="error = 1">
