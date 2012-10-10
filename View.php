@@ -2,14 +2,19 @@
 
 namespace Steel;
 
+use Steel\Injectors\View\Template as TemplateInjector;
+use Steel\Injectors\View\Data as DataInjector;
+use Steel\Injectors\Config as ConfigInjector;
+use Steel\Injectors\Renderer as RendererInjector;
+
 /**
 
  */class View
 {
-    use Injectors\View\Template;
-    use Injectors\View\Data;
-    use Injectors\Config;
-    use Injectors\Renderer;
+    use TemplateInjector;
+    use DataInjector;
+    use ConfigInjector;
+    use RendererInjector;
 
     /**
      * @var Interfaces\Renderer

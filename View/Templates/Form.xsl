@@ -3,6 +3,7 @@
   <xsl:output method="xml" version="5.0" encoding="utf-8" indent="yes"
               standalone="yes" omit-xml-declaration="yes"/>
 
+  <xsl:include href="Form/Checkbox.xsl"/>
   <xsl:include href="Form/InputText.xsl"/>
   <xsl:include href="Form/Password.xsl"/>
   <xsl:include href="Form/TextArea.xsl"/>
@@ -42,8 +43,21 @@
           <xsl:variable name="selected">
             <xsl:value-of select="selected"/>
           </xsl:variable>
+          <xsl:variable name="for">
+            <xsl:value-of select="for"/>
+          </xsl:variable>
 
           <xsl:choose>
+
+            <xsl:when test="type = 'Checkbox'">
+              <xsl:call-template name="Checkbox">
+                <xsl:with-param name="value" select="$value"/>
+                <xsl:with-param name="label" select="$label"/>
+                <xsl:with-param name="name" select="$name"/>
+                <xsl:with-param name="class" select="$class"/>
+                <xsl:with-param name="for" select="$for"/>
+              </xsl:call-template>
+            </xsl:when>
 
             <xsl:when test="type = 'InputText'">
               <xsl:call-template name="InputText">
@@ -52,6 +66,7 @@
                 <xsl:with-param name="name" select="$name"/>
                 <xsl:with-param name="class" select="$class"/>
                 <xsl:with-param name="placeholder" select="$placeholder"/>
+                <xsl:with-param name="for" select="$for"/>
               </xsl:call-template>
             </xsl:when>
 
@@ -62,6 +77,7 @@
                 <xsl:with-param name="name" select="$name"/>
                 <xsl:with-param name="class" select="$class"/>
                 <xsl:with-param name="placeholder" select="$placeholder"/>
+                <xsl:with-param name="for" select="$for"/>
               </xsl:call-template>
             </xsl:when>
 
@@ -72,6 +88,7 @@
                 <xsl:with-param name="name" select="$name"/>
                 <xsl:with-param name="class" select="$class"/>
                 <xsl:with-param name="placeholder" select="$placeholder"/>
+                <xsl:with-param name="for" select="$for"/>
               </xsl:call-template>
             </xsl:when>
 
@@ -82,6 +99,7 @@
                 <xsl:with-param name="name" select="$name"/>
                 <xsl:with-param name="class" select="$class"/>
                 <xsl:with-param name="placeholder" select="$placeholder"/>
+                <xsl:with-param name="for" select="$for"/>
               </xsl:call-template>
             </xsl:when>
 
@@ -93,6 +111,7 @@
                 <xsl:with-param name="class" select="$class"/>
                 <xsl:with-param name="placeholder" select="$placeholder"/>
                 <xsl:with-param name="selected" select="$selected"/>
+                <xsl:with-param name="for" select="$for"/>
               </xsl:call-template>
             </xsl:when>
 

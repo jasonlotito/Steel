@@ -3,10 +3,8 @@
 namespace Steel;
 
 use Steel\Interfaces\Request as IRequest;
+use Steel\Request\Header\Accepts\InterfaceAccepts;
 
-/**
-
- */
 class Request implements IRequest
 {
     use Injectors\Config;
@@ -45,9 +43,9 @@ class Request implements IRequest
      * @param $type
      * @return bool
      */
-    public function accepts($type)
+    public function accepts( InterfaceAccepts $type )
     {
-        return false !== stripos($this->requestHeaders['HTTP_ACCEPT'], $type);
+        return $type->accepts( $this->requestHeaders['HTTP_ACCEPT']);
     }
 
     /**

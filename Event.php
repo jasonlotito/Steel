@@ -2,6 +2,8 @@
 
 namespace Steel;
 
+use Steel\Event\EventInterface;
+
 /**
  * Event Manager
  *
@@ -18,33 +20,35 @@ class Event
     /**
      * Set handler to call while on an event
      *
-     * @param string $event
+     * @param EventInterface $event
      * @param callable $callable
      * @return void
      */
-    public static function on($event, callable $callable)
+    public static function on(EventInterface $event, callable $callable)
     {
-        self::$observers[$event][] = $callable;
+        $eventName = (string) $event;
+        self::$observers[$eventName][] = $callable;
     }
 
     /**
      * Send an event with data optional
      *
-     * @param string $event
+     * @param EventInterface $event
      * @param mixed|null $data
      * @return bool
      */
-    public static function send($event, $data = null)
+    public static function send(EventInterface $event, $data = null)
     {
         $return = true;
+        $eventName = (string) $event;
 
-        if (!isset( self::$observers[$event] )) {
+        if (!isset( self::$observers[$eventName] )) {
             return $return;
         }
 
         /** @var callable $callable */
-        foreach (self::$observers[$event] as $callable) {
-            $return = $return && call_user_func($callable, $event, $data);
+        foreach (self::$observers[$eventName] as $callable) {
+            $return = $return && call_user_func($callable, $eventName, $data);
         }
 
         return $return;

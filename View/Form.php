@@ -2,16 +2,8 @@
 
 namespace Steel\View;
 
-    /**
-     * Form
-     * ${DESCRIPTION}
-     *
-     * @module ${MODULE}
-     * @submodule ${SUBMODULE}
-     * @author Jason Lotito <jasonlotito@gmail.com>
-     */
 /**
-
+ * Form
  */
 class Form
 {
@@ -58,6 +50,11 @@ class Form
         $this->addElement($label, $name, $value, 'InputText');
     }
 
+    public function addCheckbox($label, $name = null, $value = '')
+    {
+        $this->addElement($label, $name, $value, 'Checkbox');
+    }
+
     public function addPassword($label, $name = null, $value = '')
     {
         $this->addElement($label, $name, $value, 'Password');
@@ -76,12 +73,14 @@ class Form
             $options = $label;
             unset( $label );
             $name = $this->getOption('name', $options);
+            $for = $id = $this->getOption('id', $options );
         } else {
             $options = [
                 'label' => $label,
                 'name' => $name,
                 'value' => $value,
             ];
+            $for = $id = '';
         }
 
         $this->elementCount++;
@@ -89,6 +88,8 @@ class Form
         $elements = [
             'name' => isset( $name ) ? $name : 'input' . $this->elementCount,
             'type' => $element,
+            'for' => $for,
+            'id' => $id,
         ];
 
         $elements = array_merge($options, $elements);
@@ -137,7 +138,9 @@ class Form
     }
 
     /**
-
+     * Output form
+     *
+     * @return string
      */
     public function output()
     {

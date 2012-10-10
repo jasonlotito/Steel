@@ -9,6 +9,9 @@ use Steel\Injectors\Router;
 
 use Steel\Container\Injector as Container;
 
+use Steel\Request\Header\Accepts\HTML as AcceptHTML;
+use Steel\Request\Header\Accepts\JSON as AcceptJSON;
+
 /**
  * Application
  */
@@ -97,8 +100,8 @@ class Application implements Interfaces\Application
         $config = (array) $this->config->get();
         echo '<pre>';
         var_dump($_SERVER, $_ENV);
-        var_dump($this->request->accepts('text/html'));
-        var_dump($this->request->accepts('application/json'));
+        var_dump($this->request->accepts(new AcceptHTML()));
+        var_dump($this->request->accepts(new AcceptJSON()));
 
         phpinfo();
     }

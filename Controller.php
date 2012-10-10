@@ -2,16 +2,24 @@
 
 namespace Steel;
 
+use Steel\Injectors\View as ViewInjector;
+use Steel\Injectors\Request as RequestInjector;
+use Steel\Injectors\Response as ResponseInjector;
+use Steel\Injectors\Config as ConfigInjector;
+use Steel\Injectors\Event as EventInjector;
+
+use Steel\Controller\Events\Flushed;
+
 /**
  * Controller
  */
 abstract class Controller
 {
-    use Injectors\View;
-    use Injectors\Request;
-    use Injectors\Response;
-    use Injectors\Config;
-    use Injectors\Event;
+    use ViewInjector;
+    use RequestInjector;
+    use ResponseInjector;
+    use ConfigInjector;
+    use EventInjector;
 
     /**
 
@@ -82,6 +90,6 @@ abstract class Controller
     {
         $this->view->output();
         $this->response->flush();
-        $this->sendEvent(self::EVENT_CONTROLLER_FLUSHED);
+        $this->sendEvent(new Flushed());
     }
 }

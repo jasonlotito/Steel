@@ -2,6 +2,8 @@
 
 namespace Steel\Interfaces;
 
+use Steel\Request\Header\Accepts\InterfaceAccepts;
+
 /**
  * Request Interface
  */
@@ -28,7 +30,7 @@ namespace Steel\Interfaces;
      * @param $type
      * @return boolean
      */
-    public function accepts($type);
+    public function accepts(InterfaceAccepts $type);
 
     /**
      * @param $contains
